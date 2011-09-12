@@ -68,8 +68,36 @@
 // 
 // Dina tre testfall
 
+    // Checks string with a repeated pattern with two characters.
+    void test_b_repeated_twice( void )
+    {
+        char vek[] = {'a', 'b', 'a', 'b', 'x'};
+        int result = must_follow_a(vek, 4, 'a', 'b');
+        TS_ASSERT_EQUALS(result, 2);
+    }
+    
+    // Checks off-by-one problem with length.
+    void test_c_length_off_by_one( void )
+    {
+        char vek[] = {'b', 'b', 'a', 'b', 'b'};
+        int result = must_follow_a(vek, 3, 'a', 'b');
+        TS_ASSERT_EQUALS(result, 0);
+    }
+    
+    // Tests with an empty vector.
+    void test_d_( void )
+    {
+        char vek[] = {};
+        int result = must_follow_a(vek, 0, 'a', 'b');
+        TS_ASSERT_EQUALS(result, 0);
+    }
 
 // Varför är det så viktigt att testa randvillkoren?
+
+    För att minnet utanför vektorer är odefinerat. Om man skickar in en hel
+    vektor och funktionen läser utanför den kan man få olika resultat med
+    olika kompilatorer eller under körningarna. Det är inte säkert att man
+    upptäcker problemet då, och det kan vara svårt att felsöka.
 
 
 /////////////////////////////////////////////////////////////////
