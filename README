@@ -10,9 +10,13 @@
 //
 // vad betyder \$* i en makefile? 
 
+    Det är en "automatic variable" som används i implicita regler.
 
 // vad gör -Wall och -g ?
 
+    -Wall aktiverar alla typer av varningar.
+    -g aktiverar debug kompilering, debug information kompileras in i binären
+    och gör att man får bättre information i gdb tex.
 
 /////////////////////////////////////////////////////////////////
 //
