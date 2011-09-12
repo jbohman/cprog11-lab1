@@ -44,8 +44,15 @@
 // 
 // Varför blir värdet på variabeln w inte det man tror (0.29*100)? 
 
+    0.29 kan inte lagras exakt som en float utan blir 0.289999992.
+    Sedan blir det avrundat neråt när man castar det till en int.
+
 
 // Hur många varv körs for-loopen i funktionen powerof? 
+
+    for-loopen har bara ett tomt statement (ett ;) och det körs y gånger.
+    Koden efter som ser ut att tillhöra loopen, loopas inte och körs en enda
+    gång.
 
 
 // 1.2 b)
