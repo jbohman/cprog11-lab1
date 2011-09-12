@@ -291,15 +291,26 @@
 
 // Hur ser valgrinds felmeddelande ut?  
 
+    ==28568== Conditional jump or move depends on uninitialised value(s)
+    ==28568==    at 0x80484B1: foo(Data**, int) (Data.cpp:7)
+    ==28568==    by 0x804851A: main (Data.cpp:15)
 
 // Blir det någon skillnad i hur mycket minne som läcker när man
 // kommenterar if-satsen?
 
+    Ja, den läcker "indirekt" mer minne genom Data-objekten som läggs i p,
+    som inte frigörs.
 
 // Borde det ha blivit någon skillnad?
 
+    Det beror på vilka värden elementen i vektorn får när man kör programmet.
+    I vårt fall verkade det som de initierades till 0, så det allokerades fler
+    objekt som inte frigjordes.
 
 // Varför läcker programmet fortfarande minne?
+
+    Vektorn frigörs, men pekare har ingen destruktor så innehållet i vektorn
+    (dvs Data-objekten) frigörs inte.
 
 
 /////////////////////////////////////////////////////////////////
