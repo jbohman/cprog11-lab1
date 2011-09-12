@@ -265,7 +265,8 @@
 //   delete aa;       // Vad kommer att hända
 
     Denna kod försöker frigöra det A-objekt som aa pekar på. Men aa pekar på
-    en vektor av flera A-objekt, så det är odefinierat.
+    en vektor av flera A-objekt, så det är odefinierat. I detta fall så verkar
+    det bli en minnesläcka.
 
 
 /////////////////////////////////////////////////////////////////
