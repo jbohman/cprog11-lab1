@@ -2,6 +2,7 @@
 #include "vector.h"
 
 Vector::Vector(size_t size) {
+    Vector::size = size;
     vector = new unsigned int[size];
     for (unsigned int i = 0; i < size; ++i) {
         vector[i] = 0;
