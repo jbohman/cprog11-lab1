@@ -1,4 +1,5 @@
 #include <cxxtest/TestSuite.h>
+#include <stdexcept>
 
 #include "vector.h"
 
@@ -94,5 +95,41 @@ public:
         TS_ASSERT_EQUALS(constref, 13);
     }
     
+    
+    
+    // Testcase 5
+    
+    // Test range checks
+    
+    void test_5_out_of_bounds(void)
+    {
+        Vector z(0);
+        Vector a(1);
+        bool threw = false;
+        
+        // Test with an empty vector
+        try { z[0] = 17; }
+        catch (std::out_of_range e) { threw = true; }
+        TS_ASSERT_EQUALS(threw, true);
+        
+        // Test negative index
+        threw = false;
+        try { a[-1] = 17; }
+        catch (std::out_of_range e) { threw = true; }
+        TS_ASSERT_EQUALS(threw, true);
+        
+        // Test too large index
+        threw = false;
+        try { a[1] = 17; }
+        catch (std::out_of_range e) { threw = true; }
+        TS_ASSERT_EQUALS(threw, true);
+        
+        // Test with a const vector too
+        const Vector b(1);
+        threw = false;
+        try { int i = b[1]; }
+        catch (std::out_of_range e) { threw = true; }
+        TS_ASSERT_EQUALS(threw, true);
+    }
 };
 
