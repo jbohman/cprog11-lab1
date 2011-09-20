@@ -1,5 +1,6 @@
 #include <cxxtest/TestSuite.h>
 #include <stdexcept>
+#include <climits>
 
 #include "vector.h"
 
@@ -218,5 +219,26 @@ public:
         TS_ASSERT_EQUALS(c[2], 31);
     }
     
+    
+    // Test 9
+    
+    // Test initialization of default values. This test is more reliable if
+    // it's run under Valgrind.
+    
+    void test_9_defaults(void)
+    {
+        for (size_t i = 0; i < 2; i++) {
+            // Test twice. Hopefully the vector is allocated in the same place
+            // the second time.
+            Vector a(5);
+            for (size_t j = 0; j < 5; j++) {
+                // check that the value was initialized to zero
+                TS_ASSERT_EQUALS(a[j], 0);
+                
+                // set all bits to one
+                a[j] = UINT_MAX;
+            }
+        }
+    }
 };
 
