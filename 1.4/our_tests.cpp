@@ -7,7 +7,7 @@ class VectorTestSuite : public CxxTest::TestSuite
 {
 private:
     
-    void call_by_value(Vector v) { }
+    int access_by_value(Vector v, size_t index) { return v[index]; }
     
 public:
 
@@ -22,14 +22,8 @@ public:
         Vector b(5);
         
         // copy constructor
-        call_by_value(a);
-        call_by_value(b);
-        
-        // assignment constructor
-        Vector c = a;
-        c = b;
-        a = a;
-        b = b;
+        access_by_value(a, 1);
+        access_by_value(b, 1);
     }
     
     
@@ -131,5 +125,73 @@ public:
         catch (std::out_of_range e) { threw = true; }
         TS_ASSERT_EQUALS(threw, true);
     }
+    
+    
+    // Test 6
+    
+    // Test that the copy constructor copies everything correctly
+    
+    void test_6_copy_constructor(void)
+    {
+        bool threw;
+        Vector z(0);
+        Vector a(3);
+        a[0] = 23;
+        a[2] = 19;
+        
+        // Test copying of an empty vector
+        threw = false;
+        try { access_by_value(z, 0); }
+        catch (std::out_of_range e) { threw = true; }
+        TS_ASSERT_EQUALS(threw, true);
+        
+        // Test copying of a non-empty vector
+        TS_ASSERT_EQUALS(access_by_value(a, 0), 23);
+        TS_ASSERT_EQUALS(access_by_value(a, 2), 19);
+        
+        // Check that the size is still right
+        threw = false;
+        try { access_by_value(a, 3); }
+        catch (std::out_of_range e) { threw = true; }
+        TS_ASSERT_EQUALS(threw, true);
+    }
+    
+    
+    // Test 7
+    
+    // Test assignment operator
+    
+    void test_7_assignment_operator(void)
+    {
+        bool threw;
+        Vector z(0);
+        Vector a(3);
+        a[0] = 29;
+        a[2] = 31;
+        
+        // Test a non-empty vector
+        Vector c = a;
+        
+        TS_ASSERT_EQUALS(c[0], 29);
+        TS_ASSERT_EQUALS(c[2], 31);
+        
+        threw = false;
+        try { int i = c[3]; }
+        catch (std::out_of_range e) { threw = true; }
+        TS_ASSERT_EQUALS(threw, true);
+        
+        // Test the empty vector
+        c = z;
+        threw = false;
+        try { int i = c[0]; }
+        catch (std::out_of_range e) { threw = true; }
+        TS_ASSERT_EQUALS(threw, true);
+        
+        // Test self-assignment
+        z = z;
+        a = a;
+        c = c;
+    }
+    
 };
 
