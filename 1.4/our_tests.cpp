@@ -8,6 +8,7 @@ class VectorTestSuite : public CxxTest::TestSuite
 private:
     
     int access_by_value(Vector v, size_t index) { return v[index]; }
+    void change_by_value(Vector v, size_t index, int value) { v[index] = value; }
     
 public:
 
@@ -191,6 +192,30 @@ public:
         z = z;
         a = a;
         c = c;
+    }
+    
+    
+    // Test 8
+    
+    // Test that changes to copies don't affect the originals
+    
+    void test_8_changes_to_copies(void)
+    {
+        Vector a(3);
+        a[0] = 29;
+        a[2] = 31;
+        
+        // Test copy constructor
+        change_by_value(a, 0, 37);
+        change_by_value(a, 2, 39);
+        
+        // Test assignment constructor
+        Vector c = a;
+        c[0] = 37;
+        a[2] = 39;
+        
+        TS_ASSERT_EQUALS(a[0], 29);
+        TS_ASSERT_EQUALS(c[2], 31);
     }
     
 };
