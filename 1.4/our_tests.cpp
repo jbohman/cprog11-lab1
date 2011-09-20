@@ -31,5 +31,23 @@ public:
         b = b;
     }
     
+    
+    // Testcase 2
+    
+    // Tests assignment to elements
+    
+    void test_2_assignment(void)
+    {
+        Vector a(11);
+        
+        for (size_t i = 0; i < 11; i++) {
+            a[i] = 7*i;
+        }
+        
+        for (size_t i = 0; i < 11; i++) {
+            TS_ASSERT_EQUALS(a[i], 7*i);
+        }
+    }
+    
 };
 
