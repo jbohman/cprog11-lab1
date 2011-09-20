@@ -49,5 +49,50 @@ public:
         }
     }
     
+    
+    // Testcase 3
+    
+    // Tests index access
+    
+    void test_3_index(void)
+    {
+        Vector a(2);
+        a[1] = 2;
+        a[0] = 13;
+        
+        // Test access to non-const vector
+        TS_ASSERT_EQUALS(a[0], 13);
+        TS_ASSERT_EQUALS(a[1], 2);
+        
+        // Test access to const vector
+        const Vector b = a;
+        TS_ASSERT_EQUALS(b[0], 13);
+        TS_ASSERT_EQUALS(b[1], 2);
+    }
+    
+    
+    // Testcase 4
+    
+    // Test index access via references
+    
+    void test_4_index_ref(void)
+    {
+        Vector a(2);
+        a[1] = 2;
+        a[0] = 13;
+        
+        // Test access via reference
+        unsigned int & ref = a[1];
+        TS_ASSERT_EQUALS(ref, 2);
+        ref = 5;
+        TS_ASSERT_EQUALS(a[0], 13);
+        TS_ASSERT_EQUALS(a[1], 5);
+        
+        // Test access via const reference
+        const Vector b = a;
+        const unsigned int & constref = b[0];
+        TS_ASSERT_EQUALS(constref, 13);
+    }
+    
 };
 
