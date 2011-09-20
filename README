@@ -326,6 +326,21 @@
 // exempel där det annars kan bli dumt.
 
 
+    För att undvika att konstruktorn anropas implicit för en
+    typkonvertering, vilket man kan råka göra av misstag. T.ex:
+    
+        class StringBuffer {
+            public:
+                StringBuffer();
+                StringBuffer(int length);
+                StringBuffer(char *data);
+        }
+        
+        void display_data(StringBuffer & buffer);
+        
+        display_data(5);  // översätts till display_data(StringBuffer(5));
+    
+
 // operatorn[] måste vara en konstant medlemsfunktion i vissa
 // fall. När och varför? Hur kopierar man vektorn?
 
