@@ -257,5 +257,26 @@ public:
             TS_ASSERT_EQUALS(a[j], value);
         }
     }
+    
+    
+    // Test 11
+    
+    // Test push_back
+    
+    void test_11_push_back(void)
+    {
+        Vector<double> a;
+        TS_ASSERT_EQUALS(a.size(), 0);
+        
+        double d = 0.4711;
+        for (size_t i = 0; i < 50; i++) {
+            // Add one element
+            a.push_back(d);
+            
+            TS_ASSERT_EQUALS(a[i], d);
+            TS_ASSERT_EQUALS(a.size(), i+1);
+            d *= 3.1416;
+        }
+    }
 };
 
