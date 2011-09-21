@@ -136,7 +136,7 @@ template <class T> class Vector {
          * Erase
          */
         void erase(const size_t & index) {
-            if (index > internal_size) {
+            if (index >= internal_size) {
                 throw std::out_of_range("out of range");
             } else {
                 internal_size--;
