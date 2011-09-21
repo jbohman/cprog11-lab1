@@ -33,9 +33,9 @@ template <class T> class Vector {
          * Copy constructor
          */
         Vector(const Vector & copy) {
-            capacity = copy.capacity;
+            capacity = copy.internal_size;
             internal_size = copy.internal_size;
-            vector = new T[capacity];
+            vector = new T[internal_size];
             for (size_t i = 0; i < internal_size; ++i) {
                 vector[i] = copy.vector[i];
             }
