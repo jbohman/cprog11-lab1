@@ -371,5 +371,17 @@ public:
         TS_ASSERT_EQUALS(threw, true);
         TS_ASSERT_EQUALS(a.size(), 2);
     }
+    
+    
+    // Test 14
+    
+    // Test clear
+    
+    void test_14_clear(void)
+    {
+        Vector<double> a(5);
+        a.clear();
+        TS_ASSERT_EQUALS(a.size(), 0);
+    }
 };
 
