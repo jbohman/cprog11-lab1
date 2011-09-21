@@ -1,6 +1,7 @@
 #include <cstddef>
-#include <cstdlib>
 #include <stdexcept>
+#include <algorithm>
+#include <functional>
 
 #ifndef VECTOR_H
 #define VECTOR_H
@@ -12,19 +13,12 @@ template <class T> class Vector {
         T * vector;
         
         /**
-         * This function is called by qsort in sort(). It uses the < operator
-         * to compare the elements.
+         * This is simply the inverse of std::less
          */
-        static int compare_ascending(const T & a, const T & b) {
-            if (a < b) return -1;
-            else if (a == b) return 0;
-            else return 1;
+        static bool not_less(const T & a, const T & b) {
+            return !(a < b);
         }
-        
-        static int compare_descending(const T & a, const T & b) {
-            return -compare_ascending(a, b);
-        }
-        
+
     public:
         /**
          * Default constructor
@@ -173,9 +167,13 @@ template <class T> class Vector {
          * Sort
          */
         void sort(bool ascending) {
-            std::qsort(vector, internal_size, sizeof(T),
-                       (int (*)(const void*, const void*)) (ascending ?
-                        compare_ascending : compare_descending));
+            if (ascending) {
+                std::sort(vector, vector + internal_size, std::less<T>());
+            } else {
+                // We don't want to require T to implement > so we use
+                // a custom comparer.
+                std::sort(vector, vector + internal_size, not_less);
+            }
         }
 
         /**
