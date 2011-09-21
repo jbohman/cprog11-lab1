@@ -147,6 +147,7 @@ template <class T> class Vector {
                 for (unsigned int i = index; i < internal_size; ++i) {
                     vector[i] = vector[i+1];
                 }
+                internal_size--;
             }
         }
 
