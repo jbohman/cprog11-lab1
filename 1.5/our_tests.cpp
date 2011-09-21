@@ -273,7 +273,7 @@ public:
         double value = 32.16;
         
         Vector<double> a(11, value);
-        for (size_t j = 0; j < 5; j++) {
+        for (size_t j = 0; j < 11; j++) {
             // check that the value was initialized to zero
             TS_ASSERT_EQUALS(a[j], value);
         }
