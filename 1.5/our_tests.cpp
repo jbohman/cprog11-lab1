@@ -506,5 +506,42 @@ public:
         TS_ASSERT(compare_vectors(c[1], v[1]));
         TS_ASSERT(compare_vectors(c[2], v[2]));
     }
+    
+    
+    // Test 17
+    
+    // Try to trigger bugs with internal_size vs. capacity.
+    
+    void test_17_capacity(void)
+    {
+        Vector<double> a(2000);
+        
+        // Trigger a resize internally
+        a.push_back(1.23);
+        a.push_back(2.34);
+        a.push_back(3.45);
+        TS_ASSERT_EQUALS(a.size(), 2003);
+        
+        // See if the assignment operator handles the extra capacity correctly
+        Vector<double> b(3);
+        b = a;
+        TS_ASSERT_EQUALS(b.size(), 2003);
+        
+        for (size_t i = 0; i < 1000; i++) {
+            double d = 4.56*i;
+            b.push_back(d);
+            TS_ASSERT_EQUALS(b[2003+i], d);
+        }
+        
+        // See if the assignment operator handles the extra capacity correctly
+        Vector<double> c(a);
+        TS_ASSERT_EQUALS(c.size(), 2003);
+        
+        for (size_t i = 0; i < 1000; i++) {
+            double d = 4.56*i;
+            c.push_back(d);
+            TS_ASSERT_EQUALS(c[2003+i], d);
+        }
+    }
 };
 
