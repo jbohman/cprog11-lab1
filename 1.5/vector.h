@@ -177,6 +177,7 @@ template <class T> class Vector {
             }
         }
 
+    private:
         /**
          * Update capacity
          */
