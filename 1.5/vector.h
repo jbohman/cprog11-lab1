@@ -50,7 +50,7 @@ template <class T> class Vector {
             }
         }
 
-        explicit Vector(size_t size, T default_value) {
+        explicit Vector(size_t size, const T default_value) {
             capacity = size + 1;
             internal_size = size;
             vector = new T[capacity];
@@ -104,7 +104,7 @@ template <class T> class Vector {
         /**
          * Push back
          */
-        void push_back(T element) {
+        void push_back(const T element) {
             if (internal_size >= capacity) {
                 update_capacity();
             }
@@ -115,7 +115,7 @@ template <class T> class Vector {
         /**
          * Insert
          */
-        void insert(const size_t & index, T element) {
+        void insert(const size_t & index, const T element) {
             if (index > internal_size) {
                 throw std::out_of_range("out of range");
             } else if (index == internal_size) {
