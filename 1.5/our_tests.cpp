@@ -4,6 +4,18 @@
 
 #include "vector.h"
 
+// Used for testing sort()
+class Date
+{
+    int year, month, day;
+public:
+    Date() : year(0), month(0), day(0) { }
+    Date(int y, int m, int d) : year(y), month(m), day(d) { }
+    bool operator<(const Date & other) const {
+        return (year < other.year || month < other.month || day < other.day);
+    }
+};
+
 // copied from exercise 1.4, then modified and improved
 class VectorTestSuite : public CxxTest::TestSuite 
 {
@@ -382,6 +394,62 @@ public:
         Vector<double> a(5);
         a.clear();
         TS_ASSERT_EQUALS(a.size(), 0);
+    }
+    
+    
+    // Test 15
+    
+    // Test sort
+    
+    void test_15_sort(void)
+    {
+        Vector<double> a(3);
+        
+        // Sort ascending with 3 elements
+        a[0] = 3.45;
+        a[1] = 4.56;
+        a[2] = 1.23;
+        a.sort();
+        TS_ASSERT_EQUALS(a.size(), 3);
+        TS_ASSERT_EQUALS(a[0], 1.23);
+        TS_ASSERT_EQUALS(a[1], 3.45);
+        TS_ASSERT_EQUALS(a[2], 4.56);
+        
+        // Sort descending with 3 elements
+        a.sort(false);
+        TS_ASSERT_EQUALS(a.size(), 3);
+        TS_ASSERT_EQUALS(a[0], 4.56);
+        TS_ASSERT_EQUALS(a[1], 3.45);
+        TS_ASSERT_EQUALS(a[2], 1.23);
+        
+        // Sort after elements have been removed
+        a.erase(0);
+        a.sort(true);
+        TS_ASSERT_EQUALS(a[0], 1.23);
+        TS_ASSERT_EQUALS(a[1], 3.45);
+        
+        // Sort an empty vector
+        a.clear();
+        
+        a.sort();
+        TS_ASSERT_EQUALS(a.size(), 0);
+        
+        a.sort(false);
+        TS_ASSERT_EQUALS(a.size(), 0);
+        
+        a.sort(true);
+        TS_ASSERT_EQUALS(a.size(), 0);
+        
+        // Sort a type which only implements < (and not ==, <=, >, >=)
+        Vector<Date> dates;
+        dates.push_back(Date(2002,  2, 22));
+        dates.push_back(Date(1999, 12, 31));
+        dates.push_back(Date(2000,  1,  1));
+        
+        dates.sort();
+        TS_ASSERT_EQUALS(dates.size(), 3);
+        TS_ASSERT(dates[0] < dates[1]);
+        TS_ASSERT(dates[1] < dates[2]);
     }
 };
 
