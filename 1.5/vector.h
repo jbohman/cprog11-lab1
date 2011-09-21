@@ -35,14 +35,14 @@ template <class T> class Vector {
         Vector(const Vector & copy) {
             capacity = copy.internal_size;
             internal_size = copy.internal_size;
-            vector = new T[internal_size];
+            vector = new T[capacity];
             for (size_t i = 0; i < internal_size; ++i) {
                 vector[i] = copy.vector[i];
             }
         }
 
         explicit Vector(size_t size) {
-            capacity =size + 1;
+            capacity = size + 1;
             internal_size = size;
             vector = new T[capacity];
             for (size_t i = 0; i < internal_size; ++i) {
@@ -50,7 +50,7 @@ template <class T> class Vector {
             }
         }
 
-        explicit Vector(size_t size, const T default_value) {
+        explicit Vector(size_t size, const T & default_value) {
             capacity = size + 1;
             internal_size = size;
             vector = new T[capacity];
@@ -104,7 +104,7 @@ template <class T> class Vector {
         /**
          * Push back
          */
-        void push_back(const T element) {
+        void push_back(const T & element) {
             if (internal_size >= capacity) {
                 update_capacity();
             }
@@ -115,7 +115,7 @@ template <class T> class Vector {
         /**
          * Insert
          */
-        void insert(const size_t & index, const T element) {
+        void insert(const size_t & index, const T & element) {
             if (index > internal_size) {
                 throw std::out_of_range("out of range");
             } else if (index == internal_size) {
