@@ -124,8 +124,8 @@ template <class T> class Vector {
                 if (internal_size >= capacity) {
                     update_capacity();
                 }
-                for (size_t i = index; i < internal_size; ++i) {
-                    vector[i+1] = vector[i];
+                for (size_t i = internal_size; i > index; --i) {
+                    vector[i] = vector[i-1];
                 }
                 vector[index] = element;
                 internal_size++;
