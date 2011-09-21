@@ -138,10 +138,10 @@ template <class T> class Vector {
             if (index < 0 || index > internal_size) {
                 throw std::out_of_range("out of range");
             } else {
+                internal_size--;
                 for (unsigned int i = index; i < internal_size; ++i) {
                     vector[i] = vector[i+1];
                 }
-                internal_size--;
             }
         }
 
