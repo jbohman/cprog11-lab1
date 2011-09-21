@@ -24,6 +24,15 @@ private:
     template <typename T> T access_by_value(Vector<T> v, size_t index) { return v[index]; }
     template <typename T> void change_by_value(Vector<T> v, size_t index, T value) { v[index] = value; }
     
+    template <typename T> bool compare_vectors(const Vector<T> & a, const Vector<T> & b)
+    {
+        if (a.size() != b.size()) return false;
+        for (size_t i = 0; i < a.size(); i++) {
+            if (a[i] != b[i]) return false;
+        }
+        return true;
+    }
+    
 public:
 
     // Testcase 1
@@ -450,6 +459,52 @@ public:
         TS_ASSERT_EQUALS(dates.size(), 3);
         TS_ASSERT(dates[0] < dates[1]);
         TS_ASSERT(dates[1] < dates[2]);
+    }
+    
+    
+    // Testcase 16
+    
+    // Test with vectors as elements
+    
+    void test_16_vector_as_elements(void)
+    {
+        // Create some vectors that will be used as elements
+        Vector<double> v[3];
+        v[0].push_back(5);
+        v[2].push_back(4711);
+        v[2].push_back(42);
+        
+        // Add these to a vector
+        Vector<Vector<double> > a;
+        for (int i = 0; i < 3; i++) {
+            a.push_back(v[i]);
+        }
+        
+        TS_ASSERT_EQUALS(a.size(), 3);
+        TS_ASSERT(compare_vectors(a[0], v[0]));
+        TS_ASSERT(compare_vectors(a[1], v[1]));
+        TS_ASSERT(compare_vectors(a[2], v[2]));
+        
+        // Copy with copy constructor
+        Vector<Vector<double> > b(a);
+        TS_ASSERT_EQUALS(b.size(), 3);
+        TS_ASSERT(compare_vectors(b[0], v[0]));
+        TS_ASSERT(compare_vectors(b[1], v[1]));
+        TS_ASSERT(compare_vectors(b[2], v[2]));
+        
+        // Add stuff to this copy
+        b.push_back(Vector<double>(11));
+        TS_ASSERT_EQUALS(b.size(), 4);
+        TS_ASSERT_EQUALS(b[3].size(), 11);
+        
+        // Copy with assignment
+        Vector<Vector<double> > c;
+        c.push_back(Vector<double>(5)); // put some data there that will be replaced
+        c = b;
+        TS_ASSERT_EQUALS(c.size(), 4);
+        TS_ASSERT(compare_vectors(c[0], v[0]));
+        TS_ASSERT(compare_vectors(c[1], v[1]));
+        TS_ASSERT(compare_vectors(c[2], v[2]));
     }
 };
 
