@@ -514,33 +514,33 @@ public:
     
     void test_17_capacity(void)
     {
-        Vector<double> a(2000);
+        Vector<double> a(1000);
         
         // Trigger a resize internally
         a.push_back(1.23);
         a.push_back(2.34);
         a.push_back(3.45);
-        TS_ASSERT_EQUALS(a.size(), 2003);
+        TS_ASSERT_EQUALS(a.size(), 1003);
         
         // See if the assignment operator handles the extra capacity correctly
         Vector<double> b(3);
         b = a;
-        TS_ASSERT_EQUALS(b.size(), 2003);
+        TS_ASSERT_EQUALS(b.size(), 1003);
         
-        for (size_t i = 0; i < 1000; i++) {
+        for (size_t i = 0; i < 2000; i++) {
             double d = 4.56*i;
             b.push_back(d);
-            TS_ASSERT_EQUALS(b[2003+i], d);
+            TS_ASSERT_EQUALS(b[1003+i], d);
         }
         
         // See if the assignment operator handles the extra capacity correctly
         Vector<double> c(a);
-        TS_ASSERT_EQUALS(c.size(), 2003);
+        TS_ASSERT_EQUALS(c.size(), 1003);
         
-        for (size_t i = 0; i < 1000; i++) {
+        for (size_t i = 0; i < 2000; i++) {
             double d = 4.56*i;
             c.push_back(d);
-            TS_ASSERT_EQUALS(c[2003+i], d);
+            TS_ASSERT_EQUALS(c[1003+i], d);
         }
     }
     
