@@ -36,7 +36,7 @@ template <class T> class Vector {
             capacity = copy.capacity;
             internal_size = copy.internal_size;
             vector = new T[capacity];
-            for (unsigned int i = 0; i < internal_size; ++i) {
+            for (size_t i = 0; i < internal_size; ++i) {
                 vector[i] = copy.vector[i];
             }
         }
@@ -45,7 +45,7 @@ template <class T> class Vector {
             capacity =size + 1;
             internal_size = size;
             vector = new T[capacity];
-            for (unsigned int i = 0; i < internal_size; ++i) {
+            for (size_t i = 0; i < internal_size; ++i) {
                 vector[i] = T();
             }
         }
@@ -54,7 +54,7 @@ template <class T> class Vector {
             capacity = size + 1;
             internal_size = size;
             vector = new T[capacity];
-            for (unsigned int i = 0; i < internal_size; ++i) {
+            for (size_t i = 0; i < internal_size; ++i) {
                 vector[i] = default_value;
             }
         }
@@ -71,7 +71,7 @@ template <class T> class Vector {
                 // 1: allocate new memory and copy the elements
                 T * new_vector = new T[copy.internal_size];
                 //std::copy(copy.vector, copy.vector + copy.internal_size, new_vector);
-                for (unsigned int i = 0; i < copy.internal_size; ++i) {
+                for (size_t i = 0; i < copy.internal_size; ++i) {
                     new_vector[i] = copy.vector[i];
                 }
 
@@ -123,7 +123,7 @@ template <class T> class Vector {
                 if (internal_size >= capacity) {
                     update_capacity();
                 }
-                for (unsigned int i = index; i < internal_size; ++i) {
+                for (size_t i = index; i < internal_size; ++i) {
                     vector[i+1] = vector[i];
                 }
                 vector[index] = element;
@@ -139,7 +139,7 @@ template <class T> class Vector {
                 throw std::out_of_range("out of range");
             } else {
                 internal_size--;
-                for (unsigned int i = index; i < internal_size; ++i) {
+                for (size_t i = index; i < internal_size; ++i) {
                     vector[i] = vector[i+1];
                 }
             }
@@ -182,7 +182,7 @@ template <class T> class Vector {
         void update_capacity() {
             capacity = capacity * 2;
             T * new_vector = new T[capacity];
-            for (unsigned int i = 0; i < internal_size; ++i) {
+            for (size_t i = 0; i < internal_size; ++i) {
                 new_vector[i] = vector[i];
             }
             delete [] vector;
