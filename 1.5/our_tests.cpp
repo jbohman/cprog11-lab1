@@ -119,26 +119,26 @@ public:
         // Test with an empty vector
         try { z[0] = 17; }
         catch (std::out_of_range e) { threw = true; }
-        TS_ASSERT_EQUALS(threw, true);
+        TS_ASSERT(threw);
         
         // Test negative index
         threw = false;
         try { a[-1] = 17; }
         catch (std::out_of_range e) { threw = true; }
-        TS_ASSERT_EQUALS(threw, true);
+        TS_ASSERT(threw);
         
         // Test too large index
         threw = false;
         try { a[1] = 17; }
         catch (std::out_of_range e) { threw = true; }
-        TS_ASSERT_EQUALS(threw, true);
+        TS_ASSERT(threw);
         
         // Test with a const vector too
         const Vector<double> b(1);
         threw = false;
         try { double d = b[1]; }
         catch (std::out_of_range e) { threw = true; }
-        TS_ASSERT_EQUALS(threw, true);
+        TS_ASSERT(threw);
     }
     
     
@@ -158,7 +158,7 @@ public:
         threw = false;
         try { access_by_value(z, 0); }
         catch (std::out_of_range e) { threw = true; }
-        TS_ASSERT_EQUALS(threw, true);
+        TS_ASSERT(threw);
         
         // Test copying of a non-empty vector
         TS_ASSERT_EQUALS(access_by_value(a, 0), 23);
@@ -168,7 +168,7 @@ public:
         threw = false;
         try { access_by_value(a, 3); }
         catch (std::out_of_range e) { threw = true; }
-        TS_ASSERT_EQUALS(threw, true);
+        TS_ASSERT(threw);
     }
     
     
@@ -193,14 +193,14 @@ public:
         threw = false;
         try { double d = c[3]; }
         catch (std::out_of_range e) { threw = true; }
-        TS_ASSERT_EQUALS(threw, true);
+        TS_ASSERT(threw);
         
         // Test the empty vector
         c = z;
         threw = false;
         try { double d = c[0]; }
         catch (std::out_of_range e) { threw = true; }
-        TS_ASSERT_EQUALS(threw, true);
+        TS_ASSERT(threw);
         
         // Test self-assignment
         z = z;
@@ -330,7 +330,7 @@ public:
         bool threw = false;
         try { a.insert(5, 5.67); }
         catch (std::out_of_range e) { threw = true; }
-        TS_ASSERT_EQUALS(threw, true);
+        TS_ASSERT(threw);
         TS_ASSERT_EQUALS(a.size(), 4);
     }
     
@@ -358,7 +358,7 @@ public:
         threw = false;
         try { a.erase(0); }
         catch (std::out_of_range e) { threw = true; }
-        TS_ASSERT_EQUALS(threw, true);
+        TS_ASSERT(threw);
         TS_ASSERT_EQUALS(a.size(), 0);
         
         // Erase the first element
@@ -380,7 +380,7 @@ public:
         threw = false;
         try { a.erase(2); }
         catch (std::out_of_range e) { threw = true; }
-        TS_ASSERT_EQUALS(threw, true);
+        TS_ASSERT(threw);
         TS_ASSERT_EQUALS(a.size(), 2);
     }
     
