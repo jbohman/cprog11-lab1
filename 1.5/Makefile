@@ -3,14 +3,17 @@ CXXTESTPATH=../../cxxtest/
 CXXTESTGEN=$(CXXTESTPATH)cxxtestgen.py
 
 
-all: test_template_vec
+all: test_vec test_template_vec
 
 %.o: %.cpp
 	g++ -c $*.cpp
 
 # old test program
-test_vec: test_template_vec.o vector.h
+test_template_vec: test_template_vec.o vector.h
 	g++ -g -Wall test_template_vec.o -o test_template_vec
+
+test_vec: test_vec.o vector.h
+	g++ -g -Wall test_vec.o -o test_vec
 
 # our own test code
 our_tests_gen.cpp: our_tests.cpp vector.h

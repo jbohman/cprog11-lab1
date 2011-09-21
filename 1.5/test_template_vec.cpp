@@ -33,9 +33,9 @@ int main()
     
     
     // kontrollera att följande rader inte går att kompilera
-    vc[0] = 3.1415;             // fel: tilldelning av konstant objekt
-    Vector<char> c = v;         // fel: tilldelning av olika typer
-    vc.sort();                  // fel: ändrar konstant objekt
+    //vc[0] = 3.1415;             // fel: tilldelning av konstant objekt
+    //Vector<char> c = v;         // fel: tilldelning av olika typer
+    //vc.sort();                  // fel: ändrar konstant objekt
 
     return 0;
 }
