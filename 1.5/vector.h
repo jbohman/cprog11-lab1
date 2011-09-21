@@ -80,7 +80,7 @@ template <class T> class Vector {
 
                 // 3: assign the new memory to the object
                 vector = new_vector;
-                capacity = copy.capacity;
+                capacity = copy.internal_size; // we only allocated this size!
                 internal_size = copy.internal_size;
             }
             return *this;
