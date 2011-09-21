@@ -87,14 +87,15 @@ template <class T> class Vector {
         }
 
         T & operator[](const size_t & index) {
-            if (index < 0 || index >= internal_size) {
+            // size_t is unsigned so index >= 0
+            if (index >= internal_size) {
                 throw std::out_of_range("out of range");
             }
             return vector[index];
         }
 
         T operator[](const size_t & index) const {
-            if (index < 0 || index >= internal_size) {
+            if (index >= internal_size) {
                 throw std::out_of_range("out of range");
             }
             return vector[index];
@@ -115,7 +116,7 @@ template <class T> class Vector {
          * Insert
          */
         void insert(const size_t & index, T element) {
-            if (index < 0 || index > internal_size) {
+            if (index > internal_size) {
                 throw std::out_of_range("out of range");
             } else if (index == internal_size) {
                 push_back(element);
@@ -135,7 +136,7 @@ template <class T> class Vector {
          * Erase
          */
         void erase(const size_t & index) {
-            if (index < 0 || index > internal_size) {
+            if (index > internal_size) {
                 throw std::out_of_range("out of range");
             } else {
                 internal_size--;

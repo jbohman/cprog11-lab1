@@ -1,5 +1,6 @@
 #include "vector.h"             // inkludera din headerfil här
 #include <assert.h>             // assert(b) ger felmeddelande om b falsk
+#include <iostream>
 
 
 int main()
@@ -15,7 +16,9 @@ int main()
     assert(v[0] == 2.10 &&      // hamnade de rätt?
 	   v[1] == 3.14);       
     assert(v.size() == 2);      // nu ligger två element i vektorn
+    std::cerr << v[0] << " " << v[1] << std::endl;
     v.sort(false);              // sortera i fallande ordning
+    std::cerr << v[0] << " " << v[1] << std::endl;
     assert(v[0] == 3.14 &&      // hamnade de rätt?
 	   v[1] == 2.10);       
     assert(v.size() == 2);      // ingenting ändrat?
@@ -26,7 +29,9 @@ int main()
     assert(vc[0] == 3.14 &&     // ok: ändrar ej vektorn som är konstant
 	   vc[1] == 2.11);
     
+    std::cerr << v.size() << std::endl;
     v.erase(0);                 // ta bort första elementet               
+    std::cerr << v.size() << std::endl;
     assert(v.size() == 1);      // rätt antal elelment
     v.clear();                  // töm hela vektorn
     assert(v.size() == 0);      // tom när alla element är borttagna
