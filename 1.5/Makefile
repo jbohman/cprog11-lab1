@@ -3,7 +3,7 @@ CXXTESTPATH=../../cxxtest/
 CXXTESTGEN=$(CXXTESTPATH)cxxtestgen.py
 
 
-all: test_vec test_template_vec
+all: test_vec test_template_vec our_tests
 
 test_template_vec.o: vector.h
 test_vec.o: vector.h
@@ -22,8 +22,8 @@ test_vec: test_vec.o vector.h
 our_tests_gen.cpp: our_tests.cpp vector.h
 	$(CXXTESTGEN) --error-printer -o $@ our_tests.cpp
 
-our_tests: our_tests_gen.cpp our_tests.cpp vector.h vector.o
-	g++ -g -o our_tests -I $(CXXTESTPATH) our_tests_gen.cpp our_tests.cpp vector.o
+our_tests: our_tests_gen.cpp our_tests.cpp vector.h
+	g++ -g -o our_tests -I $(CXXTESTPATH) our_tests_gen.cpp our_tests.cpp
 
 
 
