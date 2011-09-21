@@ -1,4 +1,5 @@
 #include <cstddef>
+#include <cstdlib>
 #include <stdexcept>
 
 #ifndef VECTOR_H
@@ -9,6 +10,21 @@ template <class T> class Vector {
         size_t capacity;
         size_t internal_size;
         T * vector;
+        
+        /**
+         * This function is called by qsort in sort(). It uses the < operator
+         * to compare the elements.
+         */
+        static int compare_ascending(const T & a, const T & b) {
+            if (a < b) return -1;
+            else if (a == b) return 0;
+            else return 1;
+        }
+        
+        static int compare_descending(const T & a, const T & b) {
+            return -compare_ascending(a, b);
+        }
+        
     public:
         /**
          * Default constructor
@@ -149,14 +165,16 @@ template <class T> class Vector {
         }
 
         void sort() {
-            return;
+            sort(true);
         }
 
         /**
          * Sort
          */
         void sort(bool ascending) {
-            return;
+            std::qsort(vector, internal_size, sizeof(T),
+                       (int (*)(const void*, const void*)) (ascending ?
+                        compare_ascending : compare_descending));
         }
 
         /**
