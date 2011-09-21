@@ -5,6 +5,9 @@ CXXTESTGEN=$(CXXTESTPATH)cxxtestgen.py
 
 all: test_vec test_template_vec
 
+test_template_vec.o: vector.h
+test_vec.o: vector.h
+
 %.o: %.cpp
 	g++ -c $*.cpp
 
