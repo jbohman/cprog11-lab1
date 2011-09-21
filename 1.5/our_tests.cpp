@@ -543,5 +543,35 @@ public:
             TS_ASSERT_EQUALS(c[2003+i], d);
         }
     }
+    
+    
+    // Test 18
+    
+    // Test copying and assignment with empty vectors
+    
+    void test_18_copy_empty(void)
+    {
+        Vector<double> a;
+        Vector<double> b(0);
+        Vector<double> c(10);
+        c.push_back(1.23);
+        c.push_back(2.34);
+        c.clear();
+        
+        // We should now have three empty vectors
+        TS_ASSERT_EQUALS(a.size(), 0);
+        TS_ASSERT_EQUALS(b.size(), 0);
+        TS_ASSERT_EQUALS(c.size(), 0);
+        
+        // Copy and assign these
+        Vector<double> d(a);
+        Vector<double> e(b);
+        Vector<double> f(c);
+        d = b;
+        d = f;
+        e = d;
+        Vector<double> g(e);
+        TS_ASSERT_EQUALS(g.size(), 0);
+    }
 };
 
