@@ -321,5 +321,55 @@ public:
         TS_ASSERT_EQUALS(threw, true);
         TS_ASSERT_EQUALS(a.size(), 4);
     }
+    
+    
+    // Test 13
+    
+    // Test erase
+    
+    void test_13_erase(void)
+    {
+        bool threw;
+        Vector<double> a(2);
+        a[0] = 1.23;
+        
+        // Erase last element
+        a.erase(1);
+        TS_ASSERT_EQUALS(a.size(), 1);
+        TS_ASSERT_EQUALS(a[0], 1.23);
+        
+        // Erase the only remaining element
+        a.erase(0);
+        TS_ASSERT_EQUALS(a.size(), 0);
+        
+        // Try to erase in an empty vector
+        threw = false;
+        try { a.erase(0); }
+        catch (std::out_of_range e) { threw = true; }
+        TS_ASSERT_EQUALS(threw, true);
+        TS_ASSERT_EQUALS(a.size(), 0);
+        
+        // Erase the first element
+        a.push_back(2.34);
+        a.push_back(3.45);
+        a.erase(0);
+        TS_ASSERT_EQUALS(a.size(), 1);
+        TS_ASSERT_EQUALS(a[0], 3.45);
+        
+        // Erase middle element
+        a.push_back(4.56);
+        a.push_back(5.67);
+        a.erase(1);
+        TS_ASSERT_EQUALS(a.size(), 2);
+        TS_ASSERT_EQUALS(a[0], 3.45);
+        TS_ASSERT_EQUALS(a[1], 5.67);
+        
+        // Check bounds checking
+        threw = false;
+        try { a.erase(2); }
+        catch (std::out_of_range e) { threw = true; }
+        TS_ASSERT_EQUALS(threw, true);
+        TS_ASSERT_EQUALS(a.size(), 2);
+    }
 };
 
