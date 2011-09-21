@@ -182,7 +182,9 @@ template <class T> class Vector {
          * Update capacity
          */
         void update_capacity() {
+            if (capacity == 0) capacity++;
             capacity = capacity * 2;
+            
             T * new_vector = new T[capacity];
             for (size_t i = 0; i < internal_size; ++i) {
                 new_vector[i] = vector[i];
