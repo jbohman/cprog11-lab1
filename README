@@ -344,4 +344,10 @@
 // operatorn[] måste vara en konstant medlemsfunktion i vissa
 // fall. När och varför? Hur kopierar man vektorn?
 
+    a) När man vill läsa element i en konstant vektor. Då måste alla metoder
+       som anropas vara const (även operatorer). Anledningen är att konstanta
+       objekt inte ska kunna ändras.
+    b) Man kan kopiera vektorn genom tilldelning: Vector copy = old;
+       Kan också göras med rekursion om man skickar en vektor som en
+       värdeparameter.
 
