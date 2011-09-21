@@ -278,5 +278,48 @@ public:
             d *= 3.1416;
         }
     }
+    
+    
+    // Test 12
+    
+    // Test insert
+    
+    void test_12_insert(void)
+    {
+        Vector<double> a;
+        
+        // Insert to an empty list
+        a.insert(0, 1.23);
+        TS_ASSERT_EQUALS(a.size(), 1);
+        TS_ASSERT_EQUALS(a[0], 1.23);
+        
+        // Insert first
+        a.insert(0, 2.34);
+        TS_ASSERT_EQUALS(a.size(), 2);
+        TS_ASSERT_EQUALS(a[0], 2.34);
+        TS_ASSERT_EQUALS(a[1], 1.23);
+        
+        // Insert last
+        a.insert(2, 3.45);
+        TS_ASSERT_EQUALS(a.size(), 3);
+        TS_ASSERT_EQUALS(a[0], 2.34);
+        TS_ASSERT_EQUALS(a[1], 1.23);
+        TS_ASSERT_EQUALS(a[2], 3.45);
+        
+        // Insert in the middle
+        a.insert(1, 4.56);
+        TS_ASSERT_EQUALS(a.size(), 4);
+        TS_ASSERT_EQUALS(a[0], 2.34);
+        TS_ASSERT_EQUALS(a[1], 4.56);
+        TS_ASSERT_EQUALS(a[2], 1.23);
+        TS_ASSERT_EQUALS(a[3], 3.45);
+        
+        // Insert out of bounds
+        bool threw = false;
+        try { a.insert(5, 5.67); }
+        catch (std::out_of_range e) { threw = true; }
+        TS_ASSERT_EQUALS(threw, true);
+        TS_ASSERT_EQUALS(a.size(), 4);
+    }
 };
 
