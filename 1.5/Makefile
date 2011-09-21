@@ -25,7 +25,7 @@ our_tests: our_tests_gen.cpp our_tests.cpp vector.h vector.o
 
 
 clean:
-	-$(RM) test_vec
+	-$(RM) test_vec test_template_vec
 
 .PHONY: clean
 
