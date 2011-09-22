@@ -94,7 +94,7 @@ template <class T> class Vector {
             return vector[index];
         }
 
-        T operator[](const size_t & index) const {
+        const T & operator[](const size_t & index) const {
             if (index >= internal_size) {
                 throw std::out_of_range("out of range");
             }
