@@ -44,10 +44,7 @@ template <class T> class Vector {
         explicit Vector(size_t size) {
             capacity = size + 1;
             internal_size = size;
-            vector = new T[capacity];
-            for (size_t i = 0; i < internal_size; ++i) {
-                vector[i] = T();
-            }
+            vector = new T[capacity](); // () = value initilization
         }
 
         explicit Vector(size_t size, const T & default_value) {
