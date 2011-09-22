@@ -603,6 +603,10 @@ public:
         Vector<double> g(e);
         TS_ASSERT_EQUALS(g.size(), 0);
         
+        // Check that the new vector is working
+        g.sort();
+        TS_ASSERT_EQUALS(g.size(), 0);
+        
         g.push_back(3.45);
         TS_ASSERT_EQUALS(g.size(), 1);
     }
