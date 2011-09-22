@@ -630,6 +630,12 @@ public:
             
             b = a;
             
+            // Check extra capacity elements
+            Vector<Destructible> g(1000);
+            for (size_t i = 0; i < 50; i++) { // trigger a resize
+                g.push_back(Destructible());
+            }
+            
         } // all objects in the scope are destroyed here
         
         TS_ASSERT_EQUALS(num_destructible_alive, 0);
