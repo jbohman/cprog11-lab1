@@ -535,6 +535,12 @@ public:
         TS_ASSERT(compare_vectors(c[0], v[0]));
         TS_ASSERT(compare_vectors(c[1], v[1]));
         TS_ASSERT(compare_vectors(c[2], v[2]));
+        TS_ASSERT_EQUALS(c[3].size(), 11);
+        
+        // Add stuff to this copy
+        c.push_back(Vector<double>(17));
+        TS_ASSERT_EQUALS(c.size(), 5);
+        TS_ASSERT_EQUALS(c[4].size(), 17);
     }
     
     
