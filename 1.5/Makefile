@@ -25,6 +25,9 @@ our_tests_gen.cpp: our_tests.cpp vector.h
 our_tests: our_tests_gen.cpp our_tests.cpp vector.h
 	g++ -g -o our_tests -I $(CXXTESTPATH) our_tests_gen.cpp our_tests.cpp
 
+# i/o wrapper used by kattis
+kattis_wrapper:
+	g++ -g -Wextra -Wall ../../info-lab1/cprog11lab15.cpp -I. -o kattis_wrapper
 
 
 clean:
