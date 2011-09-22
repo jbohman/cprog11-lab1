@@ -16,6 +16,36 @@ public:
     }
 };
 
+// Used for testing destructor calling
+
+static int num_destructible_alive; // number of objects that haven't been deleted yet
+
+class Destructible
+{
+    int status; // == 1234 if still allocated
+public:
+    
+    Destructible() : status(1234) {
+        num_destructible_alive++;
+    }
+    
+    Destructible(const Destructible & orig) : status(1234) {
+        num_destructible_alive++;
+    }
+    
+    // should only be used for overwriting alive objects with other alive objects
+    Destructible & operator=(const Destructible & from) {
+        TS_ASSERT_EQUALS(status, 1234);
+        return *this;
+    }
+    
+    ~Destructible() {
+        TS_ASSERT_EQUALS(status, 1234);
+        status = 4321;
+        num_destructible_alive--;
+    }
+};
+
 // copied from exercise 1.4, then modified and improved
 class VectorTestSuite : public CxxTest::TestSuite 
 {
@@ -576,5 +606,34 @@ public:
         g.push_back(3.45);
         TS_ASSERT_EQUALS(g.size(), 1);
     }
+    
+    
+    // Test 19
+    
+    // Checks that destructors, assignment operators, etc. of the elements
+    // are called properly.
+    
+    void test_19_destructors(void)
+    {
+        TS_ASSERT_EQUALS(num_destructible_alive, 0);
+        
+        { // extra scope
+            
+            Vector<Destructible> a;
+            a.push_back(Destructible());
+            
+            Vector<Destructible> b(a);
+            b.push_back(Destructible());
+            
+            b = a;
+            a.clear();
+            
+            b = a;
+            
+        } // all objects in the scope are destroyed here
+        
+        TS_ASSERT_EQUALS(num_destructible_alive, 0);
+    }
 };
+
 
