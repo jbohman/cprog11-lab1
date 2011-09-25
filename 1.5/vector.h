@@ -1,4 +1,5 @@
 #include <cstddef>
+#include <cassert>
 #include <stdexcept>
 #include <algorithm>
 #include <functional>
@@ -13,10 +14,10 @@ template <class T> class Vector {
         T * vector;
         
         /**
-         * This is simply the inverse of std::less
+         * Behaves like >, but implemented using <.
          */
-        static bool not_less(const T & a, const T & b) {
-            return !(a < b);
+        static bool greater_with_less(const T & a, const T & b) {
+            return b < a;
         }
 
     public:
@@ -169,8 +170,8 @@ template <class T> class Vector {
                 std::sort(vector, vector + internal_size, std::less<T>());
             } else {
                 // We don't want to require T to implement > so we use
-                // a custom comparer.
-                std::sort(vector, vector + internal_size, not_less);
+                // a custom comparer which uses <.
+                std::sort(vector, vector + internal_size, greater_with_less);
             }
         }
 
@@ -181,6 +182,7 @@ template <class T> class Vector {
         void update_capacity() {
             if (capacity == 0) capacity++;
             capacity = capacity * 2;
+            assert(capacity > internal_size);
             
             T * new_vector = new T[capacity];
             for (size_t i = 0; i < internal_size; ++i) {
