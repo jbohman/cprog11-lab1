@@ -1,6 +1,7 @@
 #include <cxxtest/TestSuite.h>
 #include <stdexcept>
 #include <climits>
+#include <string>
 
 #include "vector.h"
 
@@ -483,12 +484,20 @@ public:
         Vector<Date> dates;
         dates.push_back(Date(2002,  2, 22));
         dates.push_back(Date(1999, 12, 31));
+        dates.push_back(Date(2011,  9, 24));
         dates.push_back(Date(2000,  1,  1));
         
-        dates.sort();
-        TS_ASSERT_EQUALS(dates.size(), 3);
+/*        dates.sort();
+        TS_ASSERT_EQUALS(dates.size(), 4);
         TS_ASSERT(dates[0] < dates[1]);
         TS_ASSERT(dates[1] < dates[2]);
+        TS_ASSERT(dates[2] < dates[3]);*/
+        
+        dates.sort(false);
+        TS_ASSERT_EQUALS(dates.size(), 4);
+        TS_ASSERT(dates[3] < dates[2]);
+        TS_ASSERT(dates[2] < dates[1]);
+        TS_ASSERT(dates[1] < dates[0]);
     }
     
     
@@ -649,6 +658,43 @@ public:
         } // all objects in the scope are destroyed here
         
         TS_ASSERT_EQUALS(num_destructible_alive, 0);
+    }
+    
+    
+    // Test 20
+    
+    // Strings
+    
+    void test_20_strings(void)
+    {
+        Vector<std::string> a, b;
+        for (int i = 0; i < 5000; i++) {
+            
+            int which = rand() % 2;
+            Vector<std::string> & v = (which ? a : b);
+            Vector<std::string> & w = (which ? b : a);
+            
+            int op = rand() % 5;
+            switch (op) {
+                case 0:
+                    v.push_back("hej");
+                    break;
+                case 1:
+                    try { v.insert(rand() % 200, "tjo"); }
+                    catch (std::out_of_range) { }
+                case 2:
+                    try { v.erase(rand() % 200); }
+                    catch (std::out_of_range) { }
+                case 3:
+                    w = v;
+                    break;
+                case 4:
+                    Vector<std::string> c(v);
+                    break;
+            }
+            
+            if (rand() % 300 == 0) v.clear();
+        }
     }
 };
 
