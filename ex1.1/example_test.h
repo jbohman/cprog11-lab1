@@ -147,9 +147,24 @@ public:
         TS_ASSERT_THROWS_ANYTHING(e + b);
         TS_ASSERT_THROWS_ANYTHING(b + e);
     }
+    
+    void testProduct() {
+        Matrix a = strmat("  [ 1 2 3; 4 5 6 ]");
+        Matrix b = strmat("  [ 9; 8; 7 ]");
+        
+        Matrix c = a*b;
+        check_equal(c, strmat("  [ 46; 118 ]"));
+        TS_ASSERT_THROWS_ANYTHING(b*a);
+        
+        Matrix empty;
+        TS_ASSERT_THROWS_ANYTHING(a*empty);
+        TS_ASSERT_THROWS_ANYTHING(empty*a);
+        
+        check_equal(empty, empty*empty);
+    }
 
 private:
-    void check_zero(Matrix & m)
+    void check_zero(const Matrix & m)
     {
         for (size_t r = 0; r < m.rows(); r++) {
             for (size_t c = 0; c < m.cols(); c++) {
@@ -158,7 +173,7 @@ private:
         }
     }
     
-    void check_identity(Matrix & m)
+    void check_identity(const Matrix & m)
     {
         for (size_t r = 0; r < m.rows(); r++) {
             for (size_t c = 0; c < m.cols(); c++) {
@@ -167,7 +182,7 @@ private:
         }
     }
     
-    void check_equal(Matrix & m, Matrix & n)
+    void check_equal(const Matrix & m, const Matrix & n)
     {
         TS_ASSERT_EQUALS(m.rows(), n.rows());
         TS_ASSERT_EQUALS(m.cols(), n.cols());
@@ -179,7 +194,7 @@ private:
         }
     }
     
-    void check_not_equal(Matrix & m, Matrix & n)
+    void check_not_equal(const Matrix & m, const Matrix & n)
     {
         if (m.rows() != n.rows()) return;
         if (m.cols() != n.cols()) return;
