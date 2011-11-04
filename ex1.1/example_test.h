@@ -15,6 +15,17 @@ class MatrixTestSuite : public CxxTest::TestSuite
         s >> m;
         return m;
     }
+    
+    Matrix matrix_3by3() {
+        return strmat("  [ 3 1 4 ; 1 5 9 ; 0 0 0 ]");
+    }
+    
+    Matrix strmat(const char *str) {
+        Matrix m;
+        std::stringstream s(str);
+        s >> m;
+        return m;
+    }
 
     void init_matrix( Matrix& m, const char* file )
     {
@@ -92,9 +103,7 @@ public:
     {
         Matrix a(3);
         
-        Matrix m;
-        std::stringstream s("  [ 3 1 4 ; 1 5 9 ; 0 0 0 ]");
-        s >> m;
+        Matrix m = matrix_3by3();
         
         check_not_equal(m, a);
         
@@ -115,6 +124,23 @@ public:
         
         m[2][2] = 1;
         check_equal(m, a);
+    }
+    
+    void testPlus() {
+        Matrix a =          strmat("  [ 1 2 3 ; 4 5 6 ; 7 8 9 ]");
+        Matrix b = matrix_3by3(); // [ 3 1 4 ; 1 5 9 ; 0 0 0 ]
+        
+        Matrix c = a + b;
+        Matrix res = strmat("  [ 4 3 7 ; 5 10 15 ; 7 8 9 ]");
+        
+        check_equal(c, res);
+        
+        Matrix d = b + a;
+        check_equal(d, res);
+        
+        Matrix e = a_matrix_3by2();
+        TS_ASSERT_THROWS_ANYTHING(e + b);
+        TS_ASSERT_THROWS_ANYTHING(b + e);
     }
 
 private:
