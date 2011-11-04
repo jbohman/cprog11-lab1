@@ -1,0 +1,33 @@
+#################################################################
+Read and edit makefile. Asign 'testcode' to your tests
+in Makefile:
+    testcode    = example_test.h
+
+Generate your cxxtest with 
+
+ make testcode.cpp
+
+Test Matrix01.o with
+
+ make runtest01
+
+Run the test
+
+ ./runtest01
+
+#################################################################
+Compiled on (uname -a):
+
+ Linux u3.csc.kth.se 2.6.32-27-server #49-Ubuntu SMP Thu Dec 2 02:05:21 UTC 2010 x86_64 GNU/Linux
+
+with (gcc --version)
+
+ gcc (Ubuntu 4.4.3-4ubuntu5) 4.4.3
+
+reached via 
+
+ ssh u-shell.csc.kth.se
+
+result is 64-bit (file Matrix02.o)
+
+ Matrix02.o: ELF 64-bit LSB relocatable, x86-64, version 1 (SYSV), not stripped
