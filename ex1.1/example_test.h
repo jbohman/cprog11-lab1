@@ -87,6 +87,35 @@ public:
         f = e;
         check_equal(e, f);
     }
+    
+    void testSetIndexOperator()
+    {
+        Matrix a(3);
+        
+        Matrix m;
+        std::stringstream s("  [ 3 1 4 ; 1 5 9 ; 0 0 0 ]");
+        s >> m;
+        
+        check_not_equal(m, a);
+        
+        a[0][0] = 3;
+        a[0][1] = 1;
+        a[0][2] = 4;
+        a[1][0] = 1;
+        a[1][1] = 5;
+        a[1][2] = 9;
+        a[2][0] = 0;
+        a[2][1] = 0;
+        a[2][2] = 0;
+        
+        check_equal(m, a);
+        
+        a[2][2] = 1;
+        check_not_equal(m, a);
+        
+        m[2][2] = 1;
+        check_equal(m, a);
+    }
 
 private:
     void check_zero(Matrix & m)
@@ -107,7 +136,7 @@ private:
         }
     }
     
-    bool check_equal(Matrix & m, Matrix & n)
+    void check_equal(Matrix & m, Matrix & n)
     {
         TS_ASSERT_EQUALS(m.rows(), n.rows());
         TS_ASSERT_EQUALS(m.cols(), n.cols());
@@ -117,6 +146,19 @@ private:
                 TS_ASSERT_EQUALS(m[r][c], n[r][c]);
             }
         }
+    }
+    
+    void check_not_equal(Matrix & m, Matrix & n)
+    {
+        if (m.rows() != n.rows()) return;
+        if (m.cols() != n.cols()) return;
+        
+        for (size_t r = 0; r < m.rows(); r++) {
+            for (size_t c = 0; c < m.cols(); c++) {
+                if (m[r][c] != n[r][c]) return;
+            }
+        }
+        TS_ASSERT(false);
     }
 };
 
