@@ -176,6 +176,19 @@ public:
         check_equal(empty, 1*empty1);
         check_equal(empty, 0*empty1);
     }
+    
+    void testMinus() {
+        Matrix a =         strmat("  [ 1 2 3 ; 4 5 6 ; 7 8 9 ]");
+        Matrix b = matrix_3by3(); // [ 3 1 4 ; 1 5 9 ; 0 0 0 ]
+        
+        Matrix c = a - b;
+        Matrix res = strmat("  [ -2 1 -1; 3 0 -3; 7 8 9 ]");
+        check_equal(c, res);
+        
+        Matrix e = a_matrix_3by2();
+        TS_ASSERT_THROWS_ANYTHING(e - b);
+        TS_ASSERT_THROWS_ANYTHING(b - e);
+    }
 
 private:
     void check_zero(const Matrix & m)
