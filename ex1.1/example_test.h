@@ -129,6 +129,21 @@ public:
         check_equal(g, h);
     }
     
+    void testAssignRow()
+    {
+        Matrix a(2), b(2);
+        a[0][1] = 3;
+        
+        b[1] = a[0];
+        TS_ASSERT_EQUALS(b[0][0], 1);
+        TS_ASSERT_EQUALS(b[0][1], 0);
+        TS_ASSERT_EQUALS(b[1][0], 1);
+        TS_ASSERT_EQUALS(b[1][1], 3);
+        
+        a[0][0] = 5;
+        TS_ASSERT_EQUALS(b[1][0], 1);
+    }
+    
     void testSetIndexOperator()
     {
         Matrix a(3);
