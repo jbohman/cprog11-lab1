@@ -232,6 +232,34 @@ public:
         Matrix empty, empty1;
         check_equal(empty.transpose(), empty1);
     }
+    
+    void testPrint() {
+        Matrix a = matrix_3by3(); // [ 3 1 4 ; 1 5 9 ; 0 0 0 ]
+        Matrix b = strmat("  [ 3 1 0 ; 1 5 0 ]");
+        Matrix v = strmat("  [ 3 1 4 ]");
+        Matrix u = strmat("  [ 1; 5; 9 ]");
+        Matrix z;
+        Matrix id(2);
+        
+        // Copy
+        const int count = 6;
+        Matrix* originals[count] = { &a, &b, &v, &u, &z, &id };
+        Matrix copies[count] = { a, b, v, u, z, id };
+        
+        check_string(a, "[ 3 1 4 \n; 1 5 9 \n; 0 0 0 ]");
+        check_string(b, "[ 3 1 0 \n; 1 5 0 ]");
+        check_string(v, "[ 3 1 4 ]");
+        check_string(u, "[ 1 \n; 5 \n; 9 ]");
+        //check_string(z, "[ ]"); // freezes in all implementations
+        check_string(id, "[ 1 0 \n; 0 1 ]");
+        
+        // Check that the matrices are unmodified
+        for (int i = 0; i < count; i++) {
+            
+            check_equal(*originals[i], copies[i]);
+            
+        }
+    }
 
 private:
     void check_zero(const Matrix & m)
@@ -275,6 +303,13 @@ private:
             }
         }
         TS_ASSERT(false);
+    }
+    
+    void check_string(/*const*/ Matrix & m, const char *str)
+    {
+        std::stringstream ss;
+        ss << m;
+        TS_ASSERT_EQUALS(ss.str(), str);
     }
 };
 
