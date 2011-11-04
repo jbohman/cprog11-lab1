@@ -162,6 +162,20 @@ public:
         
         check_equal(empty, empty*empty);
     }
+    
+    void testScalarMultiply() {
+        Matrix a = strmat("  [ 1 2 3; 4 5 6 ]");
+        
+        check_equal(2*a, strmat("  [ 2 4 6; 8 10 12 ]"));
+        check_equal(0*a, strmat("  [ 0 0 0; 0 0 0 ]"));
+        check_equal(-1*a, strmat("  [ -1 -2 -3; -4 -5 -6 ]"));
+        
+        Matrix empty;
+        Matrix empty1;
+        
+        check_equal(empty, 1*empty1);
+        check_equal(empty, 0*empty1);
+    }
 
 private:
     void check_zero(const Matrix & m)
