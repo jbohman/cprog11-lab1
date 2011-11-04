@@ -76,6 +76,10 @@ public:
         Matrix b = a;
         check_equal(a, b);
         
+        b[0][1] = 31415;
+        TS_ASSERT_EQUALS(b[0][1], 31415);
+        TS_ASSERT_EQUALS(a[0][1], 3);
+        
         Matrix c;
         Matrix d = c;
         check_equal(c, d);
