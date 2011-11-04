@@ -215,15 +215,25 @@ public:
     void testScalarMultiply() {
         Matrix a = strmat("  [ 1 2 3; 4 5 6 ]");
         
-        check_equal(2*a, strmat("  [ 2 4 6; 8 10 12 ]"));
-        check_equal(0*a, strmat("  [ 0 0 0; 0 0 0 ]"));
-        check_equal(-1*a, strmat("  [ -1 -2 -3; -4 -5 -6 ]"));
+        Matrix res1 = strmat("  [ 2 4 6; 8 10 12 ]");
+        check_equal(2*a, res1);
+        check_equal(a*2, res1);
+        
+        Matrix res2 = strmat("[ 0 0 0; 0 0 0 ]");
+        check_equal(0*a, res2);
+        check_equal(a*0, res2);
+        
+        Matrix res3 = strmat("[ -1 -2 -3; -4 -5 -6 ]");
+        check_equal(-1*a, res3);
+        check_equal(a*-1, res3);
         
         Matrix empty;
         Matrix empty1;
         
         check_equal(empty, 1*empty1);
         check_equal(empty, 0*empty1);
+        check_equal(empty, empty1*1);
+        check_equal(empty, empty1*0);
     }
     
     void testMinus() {
