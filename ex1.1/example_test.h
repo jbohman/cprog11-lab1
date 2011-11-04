@@ -58,6 +58,17 @@ public:
         TS_ASSERT(d.rows() == 3 && d.cols() == 3);
         check_zero(d);
     }
+    
+    void testCopy()
+    {
+        Matrix a = a_matrix_3by2();
+        Matrix b = a;
+        check_equal(a, b);
+        
+        Matrix c;
+        Matrix d = c;
+        check_equal(c, d);
+    }
 
 private:
     void check_zero(Matrix & m)
@@ -74,6 +85,18 @@ private:
         for (size_t r = 0; r < m.rows(); r++) {
             for (size_t c = 0; c < m.cols(); c++) {
                 TS_ASSERT_EQUALS(m[r][c], r == c ? 1 : 0);
+            }
+        }
+    }
+    
+    bool check_equal(Matrix & m, Matrix & n)
+    {
+        TS_ASSERT_EQUALS(m.rows(), n.rows());
+        TS_ASSERT_EQUALS(m.cols(), n.cols());
+        
+        for (size_t r = 0; r < m.rows(); r++) {
+            for (size_t c = 0; c < m.cols(); c++) {
+                TS_ASSERT_EQUALS(m[r][c], n[r][c]);
             }
         }
     }
