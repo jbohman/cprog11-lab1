@@ -260,6 +260,37 @@ public:
             
         }
     }
+    
+    void testScanning() {
+        Matrix a = strmat("[ 1 ; 2 ]");
+        Matrix b = strmat("[ 1 ;\n 2 ]");
+        Matrix c = strmat("[1;2]");
+        Matrix d = strmat("    [1;2]");
+        Matrix e(2,1);
+        e[0][0] = 1;
+        e[1][0] = 2;
+        
+        check_equal(a, e);
+        check_equal(b, e);
+        check_equal(c, e);
+        check_equal(d, e);
+        
+        Matrix f = strmat("[]");
+        Matrix empty;
+        check_equal(f, empty);
+        
+        Matrix g = strmat("[1]");
+        Matrix scalar(1);
+        check_equal(g, scalar);
+        
+        Matrix h = strmat("[1 2; 3 4]");
+        Matrix square(2);
+        square[0][0] = 1;
+        square[0][1] = 2;
+        square[1][0] = 3;
+        square[1][1] = 4;
+        check_equal(h, square);
+    }
 
 private:
     void check_zero(const Matrix & m)
