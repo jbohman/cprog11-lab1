@@ -83,20 +83,46 @@ public:
     
     void testAssign()
     {
+        // Test assign 3x2 to 1x1
         Matrix a = a_matrix_3by2();
         Matrix b(1, 1);
         b = a;
         check_equal(a, b);
         
+        b[0][0] = 2;
+        check_not_equal(a, b);
+        a[0][0] = 2;
+        check_equal(a, b);
+        
+        // Test assign 0x0 to 1x4
         Matrix c;
         Matrix d(1, 4);
         d = c;
         check_equal(c, d);
         
+        // Test assign 3x5 to 0x0
         Matrix e(3, 5);
         Matrix f;
         f = e;
         check_equal(e, f);
+        
+        f[0][0] = 2;
+        check_not_equal(e, f);
+        e[0][0] = 2;
+        check_equal(e, f);
+        
+        // Test assign square to square
+        Matrix g(2), h(2);
+        g[0][1] = 3;
+        h[1][0] = 5;
+        check_not_equal(g, h);
+        g = h;
+        check_equal(g, h);
+        
+        g[0][0] = 2;
+        check_not_equal(g, h);
+        h[0][0] = 2;
+        check_equal(g, h);
     }
     
     void testSetIndexOperator()
