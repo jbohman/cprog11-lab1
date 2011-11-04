@@ -189,6 +189,15 @@ public:
         TS_ASSERT_THROWS_ANYTHING(e - b);
         TS_ASSERT_THROWS_ANYTHING(b - e);
     }
+    
+    void testNegation() {
+        Matrix a = matrix_3by3(); // [ 3 1 4 ; 1 5 9 ; 0 0 0 ]
+        Matrix res = strmat("  [ -3 -1 -4 ; -1 -5 -9 ; 0 0 0 ]");
+        check_equal(-a, res);
+        
+        Matrix empty, empty1;
+        check_equal(empty, -empty1);
+    }
 
 private:
     void check_zero(const Matrix & m)
