@@ -124,6 +124,11 @@ public:
         
         m[2][2] = 1;
         check_equal(m, a);
+        
+        TS_ASSERT_THROWS_ANYTHING(m[-1]);
+        TS_ASSERT_THROWS_ANYTHING(m[3]);
+        TS_ASSERT_THROWS_ANYTHING(m[0][-1]);
+        TS_ASSERT_THROWS_ANYTHING(m[0][3]);
     }
     
     void testPlus() {
