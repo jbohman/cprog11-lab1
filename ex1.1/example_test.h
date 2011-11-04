@@ -156,6 +156,25 @@ public:
         check_equal(c, strmat("  [ 46; 118 ]"));
         TS_ASSERT_THROWS_ANYTHING(b*a);
         
+        Matrix sqa(2), sqb(2); // square matrices
+        // square a [ -5 2; 3 1 ]
+        sqa[0][0] = -5;
+        sqa[0][1] = 2;
+        sqa[1][0] = 3;
+        // square b [ 3 -4; -1 7 ]
+        sqb[0][0] = 3;
+        sqb[0][1] = -4;
+        sqb[1][0] = -1;
+        sqb[1][1] = 7;
+        Matrix ressquare = strmat("  [ -17 34; 8 -5 ]");
+        check_equal(sqa*sqb, ressquare);
+        
+        // vector*vector
+        Matrix v = strmat("  [ 1 2 ]");
+        Matrix u = strmat("  [ 3; 4 ]");
+        Matrix resvector = strmat("  [ 11 ]");
+        check_equal(v*u, resvector);
+        
         Matrix empty;
         TS_ASSERT_THROWS_ANYTHING(a*empty);
         TS_ASSERT_THROWS_ANYTHING(empty*a);
@@ -201,14 +220,14 @@ public:
     
     void testTranspose() {
         Matrix a = matrix_3by3(); // [ 3 1 4 ; 1 5 9 ; 0 0 0 ]
-        Matrix res = matrix_3by3(); // [ 3 1 0 ; 1 5 0 ; 4 9 0 ]
+        Matrix res = strmat("  [ 3 1 0 ; 1 5 0 ; 4 9 0 ]");
         check_equal(a.transpose(), res);
-        check_equal(a, matrix_3by3()); // check original
+        check_equal(a, res); // should modify object that it was called on
         
-        Matrix b = strmat("[ 1 2 3 ]");
-        Matrix c = strmat("[ 1; 2; 3 ]");
+        Matrix b = strmat("  [ 1 2 3 ]");
+        Matrix c = strmat("  [ 1; 2; 3 ]");
         check_equal(b, c.transpose());
-        check_equal(c, b.transpose());
+        check_equal(b, c); // should modify object that it was called on
         
         Matrix empty, empty1;
         check_equal(empty.transpose(), empty1);
