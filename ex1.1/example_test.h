@@ -39,6 +39,40 @@ public:
         ss >> m;
         TS_ASSERT( m[ 0 ][ 0 ] == 1 );
     }
+    
+    /* Test constructors */
+    void testConstructors()
+    {
+        Matrix a;
+        TS_ASSERT(a.rows() == 0 && a.cols() == 0);
+        
+        Matrix b(3, 2);
+        TS_ASSERT(b.rows() == 3 && b.cols() == 2);
+        check_zero(b);
+        
+        Matrix c(5);
+        TS_ASSERT(c.rows() == 5 && c.cols() == 5);
+        check_identity(c);
+    }
+
+private:
+    void check_zero(Matrix & m)
+    {
+        for (size_t r = 0; r < m.rows(); r++) {
+            for (size_t c = 0; c < m.cols(); c++) {
+                TS_ASSERT_EQUALS(m[r][c], 0);
+            }
+        }
+    }
+    
+    void check_identity(Matrix & m)
+    {
+        for (size_t r = 0; r < m.rows(); r++) {
+            for (size_t c = 0; c < m.cols(); c++) {
+                TS_ASSERT_EQUALS(m[r][c], r == c ? 1 : 0);
+            }
+        }
+    }
 };
 
 #endif
