@@ -53,6 +53,10 @@ public:
         Matrix c(5);
         TS_ASSERT(c.rows() == 5 && c.cols() == 5);
         check_identity(c);
+        
+        Matrix d(3, 3);
+        TS_ASSERT(d.rows() == 3 && d.cols() == 3);
+        check_zero(d);
     }
 
 private:
