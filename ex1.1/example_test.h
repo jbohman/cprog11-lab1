@@ -69,6 +69,24 @@ public:
         Matrix d = c;
         check_equal(c, d);
     }
+    
+    void testAssign()
+    {
+        Matrix a = a_matrix_3by2();
+        Matrix b(1, 0);
+        b = a;
+        check_equal(a, b);
+        
+        Matrix c;
+        Matrix d(1, 4);
+        d = c;
+        check_equal(c, d);
+        
+        Matrix e(3, 5);
+        Matrix f;
+        f = e;
+        check_equal(e, f);
+    }
 
 private:
     void check_zero(Matrix & m)
