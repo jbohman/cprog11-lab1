@@ -198,6 +198,21 @@ public:
         Matrix empty, empty1;
         check_equal(empty, -empty1);
     }
+    
+    void testTranspose() {
+        Matrix a = matrix_3by3(); // [ 3 1 4 ; 1 5 9 ; 0 0 0 ]
+        Matrix res = matrix_3by3(); // [ 3 1 0 ; 1 5 0 ; 4 9 0 ]
+        check_equal(a.transpose(), res);
+        check_equal(a, matrix_3by3()); // check original
+        
+        Matrix b = strmat("[ 1 2 3 ]");
+        Matrix c = strmat("[ 1; 2; 3 ]");
+        check_equal(b, c.transpose());
+        check_equal(c, b.transpose());
+        
+        Matrix empty, empty1;
+        check_equal(empty.transpose(), empty1);
+    }
 
 private:
     void check_zero(const Matrix & m)
