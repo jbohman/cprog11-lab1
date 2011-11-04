@@ -84,7 +84,7 @@ public:
     void testAssign()
     {
         Matrix a = a_matrix_3by2();
-        Matrix b(1, 0);
+        Matrix b(1, 1);
         b = a;
         check_equal(a, b);
         
