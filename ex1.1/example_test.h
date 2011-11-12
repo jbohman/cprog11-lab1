@@ -401,9 +401,11 @@ private:
     
     void check_string(/*const*/ Matrix & m, const char *str)
     {
-        std::stringstream ss;
-        ss << m;
-        TS_ASSERT_EQUALS(ss.str(), str);
+        for (size_t i = 0; i < 2; ++i) {
+            std::stringstream ss;
+            ss << m;
+            TS_ASSERT_EQUALS(ss.str(), str);
+        }
     }
 };
 
