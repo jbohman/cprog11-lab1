@@ -391,6 +391,16 @@ public:
         square[1][1] = 4;
         check_equal(h, square);
     }
+    
+    void testChained() {
+    	Matrix a = strmat("[ 3 5; 7 11 ]");
+    	Matrix b(2);
+    	Matrix c = strmat("[ 13 17; 23 21 ]");
+    	Matrix d = strmat("[ 1; 2 ]");
+    	
+    	Matrix res = (a+b)*(c*d);
+    	check_string(res, "[ 513 \n; 1109 ]");
+    }
 
 private:
     void check_zero(const Matrix & m)
