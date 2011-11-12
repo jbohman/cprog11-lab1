@@ -92,9 +92,13 @@ public:
         Matrix b(1, 1);
         b = a;
         check_equal(a, b);
+        check_string(a, "[ 1 3 5 \n; 0 2 0 ]");
+        check_string(b, "[ 1 3 5 \n; 0 2 0 ]");
         
         b[0][0] = 2;
         check_not_equal(a, b);
+        check_string(a, "[ 1 3 5 \n; 0 2 0 ]");
+        check_string(b, "[ 2 3 5 \n; 0 2 0 ]");
         a[0][0] = 2;
         check_equal(a, b);
         
@@ -127,6 +131,39 @@ public:
         check_not_equal(g, h);
         h[0][0] = 2;
         check_equal(g, h);
+    }
+    
+    void testAssignTranspose()
+    {
+        static const size_t num_tests = 4;
+        static const char* tests[num_tests] = {
+            "[ 5 ]", "[ 7 11 ]", "[ 13 \n; 17 ]", "[ 19 23 \n; 29 31 ]"
+        };
+        static const char* transposed[num_tests] = {
+            "[ 5 ]", "[ 7 \n; 11 ]", "[ 13 17 ]", "[ 19 29 \n; 23 31 ]"
+        };
+        
+        for (size_t i = 0; i < num_tests; i++) {
+            Matrix m = strmat(tests[i]);
+            Matrix n = m;
+            
+            n.transpose();
+            
+            check_string(m, tests[i]);
+            check_string(n, transposed[i]);
+            
+            m.transpose();
+            
+            check_string(m, transposed[i]);
+            check_string(n, transposed[i]);
+            
+            m = n;
+            
+            n.transpose();
+            
+            check_string(m, transposed[i]);
+            check_string(n, tests[i]);
+        }
     }
     
     void testAssignRow()
