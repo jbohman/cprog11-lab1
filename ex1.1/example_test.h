@@ -398,8 +398,8 @@ public:
     	Matrix c = strmat("[ 13 17; 23 21 ]");
     	Matrix d = strmat("[ 1; 2 ]");
     	
-    	Matrix res = (a+b)*(c*d);
-    	check_string(res, "[ 513 \n; 1109 ]");
+    	Matrix res = -((a+b)*(c*d) - d) * 2;
+    	check_string(res, "[ -1024 \n; -2214 ]");
     }
 
 private:
