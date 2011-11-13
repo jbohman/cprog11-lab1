@@ -24,34 +24,36 @@ template <class T> class Vector {
         /**
          * Default constructor
          */
-        Vector() {
-            capacity = 2;
-            internal_size = 0;
-            vector = new T[capacity];
-        }
-
+        Vector() :
+            capacity(2),
+            internal_size(0),
+            vector(new T[capacity]) { }
+        
         /**
          * Copy constructor
          */
-        Vector(const Vector & copy) {
-            capacity = copy.internal_size;
-            internal_size = copy.internal_size;
-            vector = new T[capacity];
+        Vector(const Vector & copy) :
+            capacity(copy.internal_size),
+            internal_size(copy.internal_size),
+            vector(new T[capacity])
+       {
             for (size_t i = 0; i < internal_size; ++i) {
                 vector[i] = copy.vector[i];
             }
         }
 
-        explicit Vector(size_t size) {
-            capacity = size + 1;
-            internal_size = size;
-            vector = new T[capacity](); // () = value initilization
+        explicit Vector(size_t size) :
+            capacity(size + 1),
+            internal_size(size),
+            vector(new T[capacity]()) // () = value initilization
+        {
         }
 
-        explicit Vector(size_t size, const T & default_value) {
-            capacity = size + 1;
-            internal_size = size;
-            vector = new T[capacity];
+        explicit Vector(size_t size, const T & default_value) :
+            capacity(size + 1),
+            internal_size(size),
+            vector(new T[capacity])
+        {
             for (size_t i = 0; i < internal_size; ++i) {
                 vector[i] = default_value;
             }
