@@ -4,6 +4,11 @@ testcode    = example_test.h
 
 tests: runtest01 runtest02 runtest03 runtest04 runtest05 runtest06 runtest07 runtest08 runtest09
 
+.cpp.o:
+	g++ -Wall -Wextra -Weffc++ -g -c $< -o $@
+
+OurMatrix.o: OurMatrix.h
+
 testcode.cpp: $(testcode)
 	python $(cxxtestpath)cxxtestgen.py --error-printer -o testcode.cpp $(testcode)
 
@@ -20,6 +25,9 @@ test: tests
 	./runtest07 || true
 	./runtest08 || true
 	./runtest09 || true
+
+runourtest: testcode.cpp OurMatrix.o
+	g++ -I $(cxxtestpath) -g -o runourtest testcode.cpp OurMatrix.o
 
 clean:
 	touch runtest01 testcode.cpp
