@@ -181,6 +181,30 @@ public:
             check_string(n, tests[i]);
         }
     }
+
+    void testAssignChained()
+    {
+        static const size_t num_tests = 3;
+        static const char* tests[num_tests] = {
+            "[ 5 ]", "[ 7 11 ]", "[ 19 23 \n; 29 31 ]"
+        };
+        static const char* results[num_tests] = {
+            "[ -50 ]", "[ -340 ]", "[ -1780 -2528 \n; -2528 -3604 ]"
+        };
+        
+        for (size_t i = 0; i < num_tests; i++) {
+            Matrix m(5);
+            m = strmat(tests[i]);
+            
+            // n = m^T
+            Matrix n = m+m;
+            n = m;
+            n.transpose();
+            
+            Matrix r = (m+m) * -n;
+            check_string(r, results[i]);
+        }
+    }
     
     void testAssignRow()
     {
