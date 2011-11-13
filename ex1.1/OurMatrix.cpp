@@ -162,8 +162,8 @@ Matrix& Matrix::transpose()
     
     size_t mr = m_cols;
     size_t mc = m_rows;
-    // Resize if needed
-    if (mr != mr) {
+    // Resize (not needed for square matrices)
+    if (mr != mc) {
         m_vectors.clear();
         m_vectors.resize(mr, matrix_row(mc));
         m_rows = mr;
