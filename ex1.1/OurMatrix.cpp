@@ -1,4 +1,5 @@
 #include "OurMatrix.h"
+#include <cctype>
 
 Matrix::Matrix() :
    m_vectors(0),
@@ -189,10 +190,71 @@ const Matrix::matrix_row& Matrix::operator[](index i) const
     return m_vectors[i];
 }
 
+static void skip_space(std::istream& is)
+{
+    while (is.good()) {
+        if (!std::isspace(is.get())) {
+            is.unget();
+            break;
+        }
+    }
+}
+
 std::istream& operator>>(std::istream& is, Matrix& m)
 {
-    // TODO
-    return is;
+    // Read [
+    skip_space(is);
+    if (!is.good() || is.get() != '[') {
+        throw std::invalid_argument("does not start with [");
+    }
+    skip_space(is);
+    
+    size_t c = 0, r = 0;; // current column / row
+    size_t cols = -1; // number of columns
+    Matrix::matrix_row values;
+    while (is.good()) {
+        int ch = is.get();
+        
+        // Ignore whitespace
+        if (std::isspace(ch)) continue;
+        
+        if (ch == ';' || ch == ']') {
+            // Set / check column count
+            if (r == 0 && c == 0 && ch == ']') {
+                // Empty matrix
+                m = Matrix();
+                return is;
+            } else if (r == 0) {
+                // First row
+                cols = c;
+                m = Matrix(1, cols);
+                m.m_vectors.clear(); // remove zero row
+            } else if (c != cols) {
+                // Not same length as first row
+                throw std::invalid_argument("rows have different lengths");
+            } else {
+                ++m.m_rows;
+            }
+            
+            // Add this row
+            m.m_vectors.push_back(values);
+            values.clear();
+            c = 0;
+            ++r;
+            
+            if (ch == ']') return is;
+            else continue;
+        }
+        
+        // Number
+        is.unget();
+        int num;
+        is >> num;
+        values.push_back(num);
+        ++c;
+    }
+    
+    throw std::invalid_argument("unexpected end of stream");
 }
 
 std::ostream& operator<<(std::ostream& os, const Matrix& m)
