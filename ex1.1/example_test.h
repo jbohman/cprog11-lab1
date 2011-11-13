@@ -80,6 +80,7 @@ public:
         Matrix b = a;
         check_equal(a, b);
         
+        // Test modification
         b[0][1] = 31415;
         TS_ASSERT_EQUALS(b[0][1], 31415);
         TS_ASSERT_EQUALS(a[0][1], 3);
@@ -94,6 +95,10 @@ public:
         Matrix f = e;
         TS_ASSERT(e.rows() == 4 && e.cols() == 4);
         check_identity(f);
+        
+        // Test modification
+        f[0][0] = 2;
+        TS_ASSERT_EQUALS(e[0][0], 1);
     }
     
     void testAssign()
