@@ -27,7 +27,7 @@ test: tests
 	./runtest09 || true
 
 runourtest: testcode.cpp OurMatrix.o ../1.5/vector.h
-	g++ -I $(cxxtestpath) -g -o runourtest testcode.cpp OurMatrix.o
+	g++ -I $(cxxtestpath) -g -DUSE_OUR_VECTOR -o runourtest testcode.cpp OurMatrix.o
 
 clean:
 	-rm -f runtest0* runourtest testcode.cpp OurMatrix.o

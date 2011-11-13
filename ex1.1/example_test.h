@@ -1,7 +1,11 @@
 #ifndef MATRIX_TEST_H_INCLUDED
 #define MATRIX_TEST_H_INCLUDED
 
+#ifdef USE_OUR_VECTOR
+#include "OurMatrix.h"
+#else
 #include "Matrix.h"
+#endif
 #include "/info/cprog09/cxxtest/cxxtest/TestSuite.h"
 #include <fstream>
 #include <sstream>

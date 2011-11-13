@@ -1,23 +1,8 @@
 #ifndef MATRIX_H
 #define MATRIX_H
-#include <vector>
+#include "../1.5/vector.h"
 #include <iostream>
 #include <stdexcept>
-
-// TODO we have to use our own Vector class
-template <class T>
-class Vector : public std::vector< T > {
-public:
-    explicit Vector <T> (std::size_t size  = 0, T data = T()) : std::vector<T>(size, data) {}
-    const T& operator[](unsigned int i) const throw(std::out_of_range) {
-        return this->at( i );
-    }
-    T& operator[](unsigned int i) throw(std::out_of_range) {
-        return this->at( i );
-    }    
-};
-
-//using namespace std;
 
 class Matrix
 {
