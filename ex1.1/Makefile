@@ -26,10 +26,9 @@ test: tests
 	./runtest08 || true
 	./runtest09 || true
 
-runourtest: testcode.cpp OurMatrix.o
+runourtest: testcode.cpp OurMatrix.o ../1.5/vector.h
 	g++ -I $(cxxtestpath) -g -o runourtest testcode.cpp OurMatrix.o
 
 clean:
-	touch runtest01 testcode.cpp
-	rm runtest0* testcode.cpp
+	-rm -f runtest0* runourtest testcode.cpp OurMatrix.o
 
