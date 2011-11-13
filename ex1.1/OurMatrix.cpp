@@ -4,21 +4,12 @@
 Matrix::Matrix() :
    m_vectors(0),
    m_rows(0),
-   m_cols(0)
-{
-}
+   m_cols(0) { }
 
 Matrix::Matrix(size_t rows, size_t cols) :
     m_vectors(rows, matrix_row(cols)), // initial value is copied to each row
     m_rows(rows),
-    m_cols(cols)
-{
-/*    for (size_t r = 0; r < rows; ++r) {
-        for (size_t c = 0; c < cols; ++c) {
-            
-        }
-    }*/
-}
+    m_cols(cols) { }
 
 Matrix::Matrix(const Matrix& m) :
     m_vectors(m.rows(), matrix_row(m.cols())),
@@ -45,17 +36,8 @@ Matrix::Matrix(size_t size) :
 
 Matrix::~Matrix()
 {
-    //delete m_vectors;
+    // m_vectors is not a pointer so it's automatically de-allocated
 }
-
-/*    class matrix_row : private Vector< int >
-    {
-    public:
-        matrix_row( std::size_t s = 0) : Vector< int >( s ) {}
-        using Vector<int>::operator [];
-    private:
-        friend std::istream& operator>>( std::istream&, Matrix& );
-    };*/
 
 size_t Matrix::rows() const { return m_rows; }
 size_t Matrix::cols() const { return m_cols; }
