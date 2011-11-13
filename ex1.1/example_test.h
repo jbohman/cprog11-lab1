@@ -325,6 +325,17 @@ public:
         check_equal(empty.transpose(), empty1);
     }
     
+    void testChainedTranspose() {
+        const char *column = "[ 1 2 3 ]";
+        const char *row = "[ 1 \n; 2 \n; 3 ]";
+        
+        Matrix a = strmat(column);
+        
+        Matrix &aref = a.transpose().transpose().transpose();
+        TS_ASSERT_EQUALS(&a, &aref);
+        check_string(aref, row);
+    }
+    
     void testPrint() {
         Matrix a = matrix_3by3(); // [ 3 1 4 ; 1 5 9 ; 0 0 0 ]
         Matrix b = strmat("  [ 3 1 0 ; 1 5 0 ]");
