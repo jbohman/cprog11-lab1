@@ -218,6 +218,7 @@ public:
     }
     
     void testPlus() {
+        // Test square
         Matrix a =          strmat("  [ 1 2 3 ; 4 5 6 ; 7 8 9 ]");
         Matrix b = matrix_3by3(); // [ 3 1 4 ; 1 5 9 ; 0 0 0 ]
         
@@ -229,9 +230,17 @@ public:
         Matrix d = b + a;
         check_equal(d, res);
         
-        Matrix e = a_matrix_3by2();
-        TS_ASSERT_THROWS_ANYTHING(e + b);
-        TS_ASSERT_THROWS_ANYTHING(b + e);
+        // Test non-sqaure
+        Matrix e = strmat("[ 1 2 3; 4 5 6 ]");
+        Matrix f = strmat("[ 3 2 1; 6 5 4 ]");
+        Matrix res1 = strmat("[ 4 4 4; 10 10 10 ]");
+        check_equal(e+f, res1);
+        
+        // Test wrong dimensions
+        Matrix w = a_matrix_3by2();
+        TS_ASSERT_THROWS_ANYTHING(w + b);
+        TS_ASSERT_THROWS_ANYTHING(b + w);
+        
     }
     
     void testProduct() {
@@ -293,6 +302,7 @@ public:
     }
     
     void testMinus() {
+        // Test square
         Matrix a =         strmat("  [ 1 2 3 ; 4 5 6 ; 7 8 9 ]");
         Matrix b = matrix_3by3(); // [ 3 1 4 ; 1 5 9 ; 0 0 0 ]
         
@@ -300,9 +310,16 @@ public:
         Matrix res = strmat("  [ -2 1 -1; 3 0 -3; 7 8 9 ]");
         check_equal(c, res);
         
-        Matrix e = a_matrix_3by2();
-        TS_ASSERT_THROWS_ANYTHING(e - b);
-        TS_ASSERT_THROWS_ANYTHING(b - e);
+        // Test non-sqaure
+        Matrix e = strmat("[ 1 2 3; 4 5 6 ]");
+        Matrix f = strmat("[ 3 2 1; 6 5 4 ]");
+        Matrix res1 = strmat("[ -2 0 2; -2 0 2 ]");
+        check_equal(e-f, res1);
+        
+        // Test wrong dimensions
+        Matrix w = a_matrix_3by2();
+        TS_ASSERT_THROWS_ANYTHING(w - b);
+        TS_ASSERT_THROWS_ANYTHING(b - w);
     }
     
     void testNegation() {
