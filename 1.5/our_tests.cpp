@@ -696,6 +696,36 @@ public:
             if (rand() % 300 == 0) v.clear();
         }
     }
+
+    // Test 21
+
+    // Test resize
+    void test_21_resize()
+    {
+        Vector<int> v;
+        
+        v.resize(2);
+        TS_ASSERT_EQUALS(v.size(), 2);
+        TS_ASSERT_EQUALS(v[0], 0);
+        TS_ASSERT_EQUALS(v[1], 0);
+        
+        v[0] = 3;
+        v[1] = 5;
+        v.resize(1);
+        v.resize(3);
+        TS_ASSERT_EQUALS(v.size(), 3);
+        TS_ASSERT_EQUALS(v[0], 3);
+        TS_ASSERT_EQUALS(v[1], 0);
+        TS_ASSERT_EQUALS(v[2], 0);
+        
+        v.resize(100, 17);
+        TS_ASSERT_EQUALS(v.size(), 100);
+        TS_ASSERT_EQUALS(v[0], 3);
+        TS_ASSERT_EQUALS(v[1], 0);
+        TS_ASSERT_EQUALS(v[2], 0);
+        TS_ASSERT_EQUALS(v[3], 17);
+        TS_ASSERT_EQUALS(v[99], 17);
+    }
 };
 
 

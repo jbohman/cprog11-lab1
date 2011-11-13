@@ -158,6 +158,32 @@ template <class T> class Vector {
             return internal_size;
         }
 
+        /**
+         * Resize. New elements are assigned the given value.
+         */
+        void resize(size_t new_size, const T& value = T()) {
+            if (new_size > capacity) {
+                // Need to resize
+                capacity = new_size;
+                T * new_vector = new T[capacity];
+                for (size_t i = 0; i < internal_size; ++i) {
+                    new_vector[i] = vector[i];
+                }
+                delete [] vector;
+                vector = new_vector;
+
+            }
+
+            if (new_size > internal_size) {
+                // Set the new elements to the default value
+                for (size_t i = internal_size; i < new_size; ++i) {
+                    vector[i] = value;
+                }
+            }
+
+            internal_size = new_size;
+        }
+
         void sort() {
             sort(true);
         }
