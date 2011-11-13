@@ -87,6 +87,13 @@ public:
         Matrix c;
         Matrix d = c;
         check_equal(c, d);
+        TS_ASSERT(d.rows() == 0 && d.cols() == 0);
+        
+        // Test identity matrix
+        Matrix e(4);
+        Matrix f = e;
+        TS_ASSERT(e.rows() == 4 && e.cols() == 4);
+        check_identity(f);
     }
     
     void testAssign()
