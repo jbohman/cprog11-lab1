@@ -257,6 +257,13 @@ class Vector<bool> {
             return filtered;
         }
         
+        /* Iterator traits */
+        typedef bool value_type;
+        typedef size_t difference_type;
+        typedef bool* pointer;
+        typedef bool& reference;
+        typedef std::random_access_iterator_tag iterator_category;
+        
 };
 
 #endif
