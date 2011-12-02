@@ -145,7 +145,18 @@ class Vector<bool> {
          * Resize. New elements are assigned the given value.
          */
         void resize(size_t new_size, bool value = bool()) {
-            data.resize(required_size(new_size));
+            // Resize the integer array
+            data.resize(required_size(new_size), value ? all_bits : 0);
+            
+            if (new_size > length && value) {
+                // Set bits in the last bits in the old int array
+                // (not assigned by resize)
+                elemtype temp = data[which_byte(length-1)];
+                for (size_t i = which_bit(length-1); i < bits_per_int; ++i) {
+                    temp = (temp & ~(1 << i)) | (temp << value);
+                }
+            }
+            
             length = new_size;
         }
 
