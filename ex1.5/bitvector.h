@@ -145,7 +145,8 @@ class Vector<bool> {
          * Resize. New elements are assigned the given value.
          */
         void resize(size_t new_size, bool value = bool()) {
-            // TODO
+            data.resize(required_size(new_size));
+            length = new_size;
         }
 
         void sort() {
