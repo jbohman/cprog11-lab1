@@ -153,13 +153,14 @@ class Vector<bool> {
             // Resize the integer array
             data.resize(required_size(new_size), value ? all_bits : 0);
             
-            if (new_size > length && value) {
+            if (length && new_size > length) {
                 // Set bits in the last bits in the old int array
                 // (not assigned by resize)
                 elemtype temp = data[which_byte(length-1)];
-                for (size_t i = which_bit(length-1); i < bits_per_int; ++i) {
-                    temp = (temp & ~(1 << i)) | (temp << value);
+                for (size_t i = which_bit(length); i < bits_per_int; ++i) {
+                    temp = (temp & ~(1 << i)) | (value << i);
                 }
+                data[which_byte(length-1)] = temp;
             }
             
             length = new_size;
