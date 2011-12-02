@@ -175,19 +175,19 @@ class Vector<bool> {
          */
         void sort(bool ascending) {
             // Count number of ones
-            size_t num_ones = 0;
+            size_t num_first = 0;
             size_t i;
             for (i = 0; i < length; ++i) {
-                if ((*this)[i]) ++num_ones;
+                if ((*this)[i] == ascending) ++num_first;
             }
             
             // Set first values
-            for (i = 0; i < num_ones; i++) {
+            for (i = 0; i < num_first; ++i) {
                 (*this)[i] = !ascending;
             }
             
             // Set last values
-            for (; i < length; i++) {
+            for (; i < length; ++i) {
                 (*this)[i] = ascending;
             }
         }
