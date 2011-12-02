@@ -23,15 +23,15 @@ class Vector<bool> {
         Vector<elemtype> data;
         size_t length;
         
-        size_t required_size(size_t num_bits) {
+        static size_t required_size(size_t num_bits) {
             return (num_bits + bits_per_int - 1) / bits_per_int;
         }
         
-        size_t which_byte(size_t bit) {
+        size_t which_byte(size_t bit) const {
             return bit / bits_per_int;
         }
         
-        size_t which_bit(size_t bit) {
+        size_t which_bit(size_t bit) const {
             return bit % bits_per_int;
         }
     
@@ -41,7 +41,9 @@ class Vector<bool> {
                 
                 elemtype & ref;
                 size_t bitindex;
+                bitproxy();
                 
+           protected:
                 bitproxy(elemtype & element, size_t bit) :
                     ref(element),
                     bitindex(bit) { }
@@ -101,15 +103,14 @@ class Vector<bool> {
             if (index >= length) {
                 throw std::out_of_range("out of range");
             }
-            cout << "which byte:" << which_byte(index) << "   bitindex:" << which_bit(index) << endl;
             return bitproxy(data[which_byte(index)], which_bit(index));
         }
 
-        const bitproxy operator[](size_t index) const {
-            /*if (index >= internal_size) {
+        const bool operator[](size_t index) const {
+            if (index >= length) {
                 throw std::out_of_range("out of range");
             }
-            return vector[index];*/
+            return (data[which_byte(index)] >> which_bit(index)) & 1;
         }
 
         /**
