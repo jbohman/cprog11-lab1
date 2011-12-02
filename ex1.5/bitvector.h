@@ -106,7 +106,7 @@ class Vector<bool> {
             return bitproxy(data[which_byte(index)], which_bit(index));
         }
 
-        const bool operator[](size_t index) const {
+        bool operator[](size_t index) const {
             if (index >= length) {
                 throw std::out_of_range("out of range");
             }
