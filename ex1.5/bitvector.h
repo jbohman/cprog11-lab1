@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <functional>
+#include <iterator>
 
 #include <iostream>
 using namespace std;
@@ -64,6 +65,43 @@ class Vector<bool> {
                 operator bool () const {
                     return (ref >> bitindex) & 1;
                 }
+        };
+        
+        class const_iterator : public std::iterator<std::random_access_iterator_tag, bool> {
+                
+                Vector<bool> *vector;
+                size_t index;
+                
+            protected:
+                const_iterator(Vector<bool> & v) :
+                    vector(&v),
+                    index(0) { }
+                
+                friend class Vector<bool>;
+                
+            public:
+                
+                const_iterator(const const_iterator & other) :
+                    vector(other.vector),
+                    index(other.index) { }
+                
+                const_iterator& operator++() { index++; return *this; }
+                const_iterator operator++(int) {
+                    const_iterator copy(*this);
+                    copy++;
+                    return copy;
+                }
+                
+                bool operator==(const const_iterator& other) const {
+                    return vector == other.vector &&
+                        index == other.index;
+                }
+                
+                bool operator!=(const const_iterator& other) const {
+                    return !(*this == other);
+                }
+                
+                bool operator*() { return (*vector)[index]; }
         };
 
         /**
