@@ -425,7 +425,7 @@ public:
 
         Vector<bool> d(32);
         d[15] = true;
-        TS_ASSERT_EQUALS(c.get_int(), 32767);
+        TS_ASSERT_EQUALS(d.get_int(), 32768);
     }
 };
 
