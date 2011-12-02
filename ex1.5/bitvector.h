@@ -44,7 +44,7 @@ class Vector<bool> {
                 size_t bitindex;
                 bitproxy();
                 
-           protected:
+            protected:
                 bitproxy(elemtype & element, size_t bit) :
                     ref(element),
                     bitindex(bit) { }
@@ -71,6 +71,12 @@ class Vector<bool> {
                 
                 const Vector<bool> *vector;
                 size_t index;
+                
+                void check_same(const const_iterator & iter) const {
+                    if (iter.vector != vector) {
+                        throw std::logic_error("comparing iterators on different vectors");
+                    }
+                }
                 
             protected:
                 const_iterator(const Vector<bool> & v, size_t i) :
@@ -102,6 +108,16 @@ class Vector<bool> {
                 }
                 
                 bool operator*() { return (*vector)[index]; }
+                
+                size_t operator-(const const_iterator & b) const {
+                    check_same(b);
+                    return index - b.index;
+                }
+                
+                const_iterator & operator+=(const size_t & amount) {
+                    index += amount;
+                    return *this;
+                }
         };
         
         const_iterator begin() const {
