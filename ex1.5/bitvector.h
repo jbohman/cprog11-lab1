@@ -178,7 +178,7 @@ class Vector<bool> {
             size_t num_first = 0;
             size_t i;
             for (i = 0; i < length; ++i) {
-                if ((*this)[i] == ascending) ++num_first;
+                if ((*this)[i] != ascending) ++num_first;
             }
             
             // Set first values
