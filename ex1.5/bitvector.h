@@ -128,7 +128,7 @@ class Vector<bool> {
                 data.push_back(0);
             }
             
-            (*this)[which_byte(length-1)] = element;
+            (*this)[length-1] = element;
         }
 
         /**
