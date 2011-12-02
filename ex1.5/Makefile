@@ -9,7 +9,7 @@ test_vec: test_vec.o bitvector.h
 	g++ -g -Wall -Wextra test_vec.o -std=c++0x -o test_vec
 
 clean:
-	-$(RM) test_vec
+	-$(RM) test_vec test_vec.o
 
 .PHONY: clean
 
