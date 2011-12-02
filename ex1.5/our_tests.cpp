@@ -415,7 +415,7 @@ public:
     void test_17_get_int()
     {
         Vector<bool> a(32, true);
-        TS_ASSERT_EQUALS(a.get_int(), 4294967296);
+        TS_ASSERT_EQUALS(a.get_int(), 4294967295);
 
         Vector<bool> b(10, false);
         TS_ASSERT_EQUALS(b.get_int(), 0);
@@ -425,7 +425,7 @@ public:
 
         Vector<bool> d(32);
         d[15] = true;
-        TS_ASSERT_EQUALS(c.get_int(), 32768);
+        TS_ASSERT_EQUALS(c.get_int(), 32767);
     }
 };
 
