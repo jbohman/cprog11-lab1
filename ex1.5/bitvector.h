@@ -123,7 +123,7 @@ class Vector<bool> {
          */
         void push_back(bool element) {
             length++;
-            if (length % bits_per_int == 0) {
+            if (length % bits_per_int == 1) {
                 // grow int vector
                 data.push_back(0);
             }
