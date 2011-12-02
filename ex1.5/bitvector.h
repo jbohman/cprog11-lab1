@@ -52,7 +52,7 @@ class Vector<bool> {
                 
             public:
                 bitproxy & operator=(bool value) {
-                    ref = (ref & ~(1 << bitindex)) | (ref << bitindex);
+                    ref = (ref & ~(1 << bitindex)) | (ref << value);
                     return *this;
                 }
                 
