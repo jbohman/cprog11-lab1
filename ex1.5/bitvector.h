@@ -205,7 +205,7 @@ class Vector<bool> {
             
             // Clear unused bits
             elemtype filtered = data[0];
-            for (size_t i = which_bit(length); i < bits_per_int; ++i) {
+            for (size_t i = length; i < bits_per_int; ++i) {
                 filtered = (filtered & ~(1 << i));
             }
             return filtered;
