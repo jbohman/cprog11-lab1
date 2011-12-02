@@ -408,6 +408,25 @@ public:
         TS_ASSERT_EQUALS(v[3], true);
         TS_ASSERT_EQUALS(v[99], true);
     }
+
+    // Test 17
+
+    // Test get_int
+    void test_17_get_int()
+    {
+        Vector<bool> a(32, true);
+        TS_ASSERT_EQUALS(a.get_int(), 4294967296);
+
+        Vector<bool> b(10, false);
+        TS_ASSERT_EQUALS(b.get_int(), 0);
+
+        Vector<bool> c(1, true);
+        TS_ASSERT_EQUALS(c.get_int(), 1);
+
+        Vector<bool> d(32);
+        d[15] = true;
+        TS_ASSERT_EQUALS(c.get_int(), 32768);
+    }
 };
 
 
