@@ -69,13 +69,13 @@ class Vector<bool> {
         
         class const_iterator : public std::iterator<std::random_access_iterator_tag, bool> {
                 
-                Vector<bool> *vector;
+                const Vector<bool> *vector;
                 size_t index;
                 
             protected:
-                const_iterator(Vector<bool> & v) :
+                const_iterator(const Vector<bool> & v, size_t i) :
                     vector(&v),
-                    index(0) { }
+                    index(i) { }
                 
                 friend class Vector<bool>;
                 
@@ -103,6 +103,14 @@ class Vector<bool> {
                 
                 bool operator*() { return (*vector)[index]; }
         };
+        
+        const_iterator begin() const {
+            return const_iterator(*this, 0);
+        }
+        
+        const_iterator end() const {
+            return const_iterator(*this, length-1);
+        }
 
         /**
          * Default constructor
