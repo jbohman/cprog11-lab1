@@ -117,11 +117,13 @@ class Vector<bool> {
          * Push back
          */
         void push_back(bool element) {
-            /*if (internal_size >= capacity) {
-                update_capacity();
+            length++;
+            if (length % bits_per_int == 0) {
+                // grow int vector
+                data.push_back(0);
             }
-            vector[internal_size] = element;
-            internal_size++;*/
+            
+            (*this)[length-1] = element;
         }
 
         /**
