@@ -56,6 +56,11 @@ class Vector<bool> {
                     return *this;
                 }
                 
+                bitproxy & operator=(const bitproxy & proxy) {
+                    *this = static_cast<bool>(proxy);
+                    return *this;
+                }
+                
                 operator bool () const {
                     return (ref >> bitindex) & 1;
                 }
