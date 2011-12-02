@@ -18,7 +18,7 @@ our_tests: our_tests_gen.cpp our_tests.cpp bitvector.h
 	g++ -g -std=c++0x -o our_tests -I $(CXXTESTPATH) our_tests_gen.cpp our_tests.cpp
 
 clean:
-	-$(RM) test_vec test_vec.o
+	-$(RM) test_vec test_vec.o our_tests our_tests_gen.cpp
 
 .PHONY: clean
 
