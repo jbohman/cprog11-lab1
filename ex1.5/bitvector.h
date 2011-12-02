@@ -157,7 +157,22 @@ class Vector<bool> {
          * Sort
          */
         void sort(bool ascending) {
-            // TODO
+            // Count number of ones
+            size_t num_ones = 0;
+            size_t i;
+            for (i = 0; i < length; ++i) {
+                if ((*this)[i]) ++num_ones;
+            }
+            
+            // Set first values
+            for (i = 0; i < num_ones; i++) {
+                (*this)[i] = !ascending;
+            }
+            
+            // Set last values
+            for (; i < length; i++) {
+                (*this)[i] = ascending;
+            }
         }
         
 };
