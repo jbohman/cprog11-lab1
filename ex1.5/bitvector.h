@@ -7,6 +7,10 @@
 #include <algorithm>
 #include <functional>
 
+#include <iostream>
+using namespace std;
+
+
 #include "../1.5/vector.h"
 
 template <>
@@ -22,20 +26,36 @@ class Vector<bool> {
         size_t required_size(size_t num_bits) {
             return (num_bits + bits_per_int - 1) / bits_per_int;
         }
+        
+        size_t which_byte(size_t bit) {
+            return bit / bits_per_int;
+        }
+        
+        size_t which_bit(size_t bit) {
+            return bit % bits_per_int;
+        }
     
     public:
     
         class bitproxy {
                 
+                elemtype & ref;
+                size_t bitindex;
+                
+                bitproxy(elemtype & element, size_t bit) :
+                    ref(element),
+                    bitindex(bit) { }
+                
+                friend class Vector<bool>;
+                
             public:
                 bitproxy & operator=(bool value) {
-                    // TODO
+                    ref = (ref & ~(1 << bitindex)) | (ref << bitindex);
                     return *this;
                 }
                 
                 operator bool () const {
-                    // TODO
-                    return false;
+                    return (ref >> bitindex) & 1;
                 }
         };
 
@@ -76,12 +96,13 @@ class Vector<bool> {
             return *this;
         }
 
-        bitproxy & operator[](size_t index) {
-            /*// size_t is unsigned so index >= 0
-            if (index >= internal_size) {
+        bitproxy operator[](size_t index) {
+            // size_t is unsigned so index >= 0
+            if (index >= length) {
                 throw std::out_of_range("out of range");
             }
-            return vector[index];*/
+            cout << "which byte:" << which_byte(index) << "   bitindex:" << which_bit(index) << endl;
+            return bitproxy(data[which_byte(index)], which_bit(index));
         }
 
         const bitproxy operator[](size_t index) const {
