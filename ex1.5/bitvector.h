@@ -67,60 +67,57 @@ class Vector<bool> {
                 }
         };
         
-        template<typename T> class template_iterator :
-            public std::iterator<std::random_access_iterator_tag, bool> {
+        class const_iterator : public std::iterator<std::random_access_iterator_tag, bool> {
                 
-            protected:
-                T *vector;
+                const Vector<bool> *vector;
                 size_t index;
                 
-                template_iterator(T & v, size_t i) :
-                    vector(&v),
-                    index(i) { }
-                
-                void check_same(const template_iterator<T> & iter) const {
+                void check_same(const const_iterator & iter) const {
                     if (iter.vector != vector) {
                         throw std::logic_error("comparing iterators on different vectors");
                     }
                 }
                 
+            protected:
+                const_iterator(const Vector<bool> & v, size_t i) :
+                    vector(&v),
+                    index(i) { }
+                
+                friend class Vector<bool>;
+                
             public:
                 
-                template_iterator<T>& operator++() { index++; return *this; }
-                template_iterator<T> operator++(int) {
+                const_iterator(const const_iterator & other) :
+                    vector(other.vector),
+                    index(other.index) { }
+                
+                const_iterator& operator++() { index++; return *this; }
+                const_iterator operator++(int) {
                     const_iterator copy(*this);
                     copy++;
                     return copy;
                 }
                 
-                bool operator==(const template_iterator<T>& other) const {
+                bool operator==(const const_iterator& other) const {
                     return vector == other.vector &&
                         index == other.index;
                 }
                 
-                bool operator!=(const template_iterator<T>& other) const {
+                bool operator!=(const const_iterator& other) const {
                     return !(*this == other);
                 }
                 
                 bool operator*() { return (*vector)[index]; }
                 
-                size_t operator-(const template_iterator<T> & b) const {
+                size_t operator-(const const_iterator & b) const {
                     check_same(b);
                     return index - b.index;
                 }
                 
-                template_iterator<T> & operator+=(const size_t & amount) {
+                const_iterator & operator+=(const size_t & amount) {
                     index += amount;
                     return *this;
                 }
-        };
-        
-                
-        class const_iterator : public template_iterator<const Vector<bool>> {
-            const_iterator(const Vector<bool> & v, size_t i) :
-                template_iterator<const Vector<bool>>(v, i) { }
-            
-            friend class Vector<bool>;
         };
         
         const_iterator begin() const {
