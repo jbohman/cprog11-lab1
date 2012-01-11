@@ -34,13 +34,67 @@ int main()
 
 
     Vector<bool> v(31); // Skapa en 31 stor vektor
+    std::cout << std::distance(v.begin(), v.end()) << std::endl;
+
+    // EXTRA
+    for(Vector<bool>::const_iterator it = v.begin(); it != v.end(); ++it) {
+        std::cout << *it << " ";
+    }
+    std::cout << std::endl;
+
     v[3] = true;
+
+    for(Vector<bool>::const_iterator it = v.begin(); it != v.end(); ++it) {
+        std::cout << *it << " ";
+    }
+    std::cout << std::endl;
+    // EXTRA END
+
+
     Vector<bool> w; // tom vektor
     std::copy(v.begin(), v.end(), std::back_inserter(w));
-    std::cout << std::distance(v.begin(), v.end());
+    std::cout << "v: " << std::distance(v.begin(), v.end()) << std::endl;
+    std::cout << "w: " << std::distance(w.begin(), w.end()) << std::endl;
     // konstant iterator och konvertering
     Vector<bool>::const_iterator it = v.begin();
     std::advance(it, 2);
+
+    // EXTRA
+    std::advance(it, 1);
+    std::cout << *it << std::endl;
+
+    for(Vector<bool>::const_iterator it = w.begin(); it != w.end(); ++it) {
+        std::cout << *it << " ";
+    }
+    std::cout << std::endl;
+    // EXTRA END
+
+
+    Vector<bool> test_a(10);
+    Vector<bool> test_b(10);
+    test_a[3] = 1;
+    test_b[3] = 0;
+    std::cout << test_a[3] << test_b[3] << std::endl;
+    Vector<bool> res = test_a & test_b;
+    std::cout << res[3] << std::endl;
+
+    std::cout << "Bitvector, 100 length, bit 3,4,95,99,32 set to one" << std::endl;
+    Vector<bool> weight_a(100);
+    weight_a[3] = 1;
+    weight_a[4] = 1;
+    weight_a[95] = 1;
+    weight_a[99] = 1;
+    weight_a[32] = 1;
+    std::cout << weight_a.weight_math() << std::endl;
+    std::cout << weight_a.weight_lookup() << std::endl;
+    std::cout << weight_a.weight_loop() << std::endl;
+
+    std::cout << "Bitvector, 33 length, bit 21 set to zero" << std::endl;
+    Vector<bool> weight_b(33, true);
+    weight_b[21] = 0;
+    std::cout << weight_b.weight_math() << std::endl;
+    std::cout << weight_b.weight_lookup() << std::endl;
+    std::cout << weight_b.weight_loop() << std::endl;
 
     return 0;
 }

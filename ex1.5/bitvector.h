@@ -7,17 +7,16 @@
 #include <algorithm>
 #include <functional>
 #include <iterator>
-
 #include <iostream>
-using namespace std;
 
+using namespace std;
 
 #include "../1.5/vector.h"
 
 template <>
 class Vector<bool> {
 
-        typedef unsigned long elemtype;
+        typedef unsigned int elemtype;
 
         static const size_t bits_per_int = 32;
         static const elemtype all_bits = 0xFFFFFFFF;
@@ -125,7 +124,7 @@ class Vector<bool> {
         }
         
         const_iterator end() const {
-            return const_iterator(*this, length-1);
+            return const_iterator(*this, length);
         }
 
         /**
@@ -180,6 +179,58 @@ class Vector<bool> {
             return (data[which_byte(index)] >> which_bit(index)) & 1;
         }
 
+        /**
+         * Not
+         */
+        Vector<bool> operator ~() const {
+            Vector<bool> result(*this);
+            for(size_t i = 0; i < result.data.size(); i++) {
+                result.data[i] ^= all_bits;
+            }
+            return result;
+        }
+
+        /**
+         * And
+         */
+        Vector<bool> operator &(const Vector<bool> & other) const {
+            if (length != other.length) {
+                throw std::logic_error("doing bit-operations on bitvectors of different length");
+            }
+            Vector<bool> result(*this);
+            for(size_t i = 0; i < result.data.size(); i++) {
+                result.data[i] &= other.data[i];
+            }
+            return result;
+        }
+
+         /**
+         * Or
+         */
+        Vector<bool> operator |(const Vector<bool> & other) const {
+            if (length != other.length) {
+                throw std::logic_error("doing bit-operations on bitvectors of different length");
+            }
+            Vector<bool> result(*this);
+            for(size_t i = 0; i < result.data.size(); i++) {
+                result.data[i] |= other.data[i];
+            }
+            return result;
+        }
+
+        /**
+         * Xor
+         */
+        Vector<bool> operator ^(const Vector<bool> & other) const {
+            if (length != other.length) {
+                throw std::logic_error("doing bit-operations on bitvectors of different length");
+            }
+            Vector<bool> result(*this);
+            for(size_t i = 0; i < result.data.size(); i++) {
+                result.data[i] ^= other.data[i];
+            }
+            return result;
+        }
         /**
          * Push back
          */
@@ -258,7 +309,7 @@ class Vector<bool> {
          * Returns the bitvector as an integer value, or throws
          * std::logic_error if the bit vector is too large.
          */
-        unsigned long get_int() {
+        elemtype get_int() {
             if (length > bits_per_int) {
                 throw std::logic_error("bitvector is larger than an int");
             } else if (length == 0) {
@@ -272,6 +323,66 @@ class Vector<bool> {
             }
             return filtered;
         }
+
+        /**
+         * Weight, mathemtically
+         */
+        unsigned long weight_math() {
+            unsigned long result = 0;
+            unsigned long x_count = 0;
+            for (size_t i = 0; i < data.size() - 1; i++) {
+                x_count = data[i] - ((data[i] >> 1) & 033333333333) - ((data[i] >> 2) & 011111111111);
+                result += ((x_count + (x_count >> 3)) & 030707070707) % 63;
+            }
+
+            elemtype last_data = data[data.size() - 1];
+            last_data <<= (data.size() * bits_per_int) - length;
+            x_count = last_data - ((last_data >> 1) & 033333333333) - ((last_data >> 2) & 011111111111);
+            result += ((x_count + (x_count >> 3)) & 030707070707) % 63;
+
+            return result;
+        }
+
+        /**
+         * Weight, 256 bit lookup array
+         */
+        unsigned long weight_lookup() {
+            static unsigned char bits_lookup[256];
+            bits_lookup[0] = 0;
+            for (int i = 0; i < 256; i++) {
+                bits_lookup[i] = (i & 1) + bits_lookup[i / 2];
+            }
+
+            unsigned long result = 0;
+            for (size_t i = 0; i < data.size() - 1; i++) {
+                result += bits_lookup[data[i] & 0xff] + bits_lookup[(data[i] >> 8) & 0xff] +
+                          bits_lookup[(data[i] >> 16) & 0xff] + bits_lookup[(data[i] >> 24) & 0xff];
+            }
+
+            elemtype last_data = data[data.size() - 1];
+            last_data <<= (data.size() * bits_per_int) - length;
+            result += bits_lookup[last_data & 0xff] + bits_lookup[(last_data >> 8) & 0xff] +
+                      bits_lookup[(last_data >> 16) & 0xff] + bits_lookup[(last_data >> 24) & 0xff];
+
+            return result;
+        }
+
+        /**
+         * Weight, loop
+         */
+        unsigned long weight_loop() {
+            unsigned long result = 0;
+            //for (size_t i = 0; i < data.size(); i++) {
+                //unsigned long temp = data[i];
+                //for (; temp; temp >>= 1) {
+                    //result += temp & 1;
+                //}
+            //}
+            for (size_t i = 0; i < length; ++i) {
+                result += (*this)[i] & 1;
+            }
+            return result;
+        }
         
         /* Iterator traits */
         typedef bool value_type;
@@ -279,8 +390,6 @@ class Vector<bool> {
         typedef bool* pointer;
         typedef bool& reference;
         typedef std::random_access_iterator_tag iterator_category;
-        
 };
 
 #endif
-
